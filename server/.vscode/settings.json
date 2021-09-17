@@ -1,0 +1,32 @@
+{
+    "editor.formatOnSaveTimeout": 1500,
+    "editor.codeLens": true,
+    "autoDocstring.docstringFormat": "google",
+    "autoDocstring.quoteStyle": "'''",
+    "editor.formatOnSave": true,
+    "python.formatting.provider": "autopep8",
+    "python.formatting.autopep8Args": [
+        "--aggressive",
+        "--aggressive",
+    ],
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.lintOnSave": true,
+    "python.linting.pep8Enabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.pylintArgs": [
+        "--load-plugins",
+        "pylint_flask",
+    ],
+    "python.linting.flake8Args": [
+        "--config=.flake8"
+    ],
+    "python.pythonPath": "/usr/local/bin/python",
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false,
+    "python.testing.autoTestDiscoverOnSaveEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "files.associations": {
+        "*.html": "jinja-html"
+    },
+}
