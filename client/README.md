@@ -76,3 +76,17 @@ More information about the usage of this directory in [the documentation](https:
 
 https://www.suzu6.net/posts/173-nuxt-scss/
 のとおりにおこなった
+
+## Docker
+
+### make docker image
+
+```
+docker build --tag <name>:<version> .
+```
+
+### run docker container
+
+```
+docker run --name <container-name> -p 3000:3000 <image-name>:<version>
+```
