@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+
+  client:
+    build:
+      context: ./client
+      target: "development"
+    volumes:
+      - ./client:/client
+      - npm-cache:/client/node_modules
+      - nuxt-cache:/client/.nuxt
+    ports:
+      - "3000:3000"
+    working_dir: /client
+    command: sh -c "yarn && yarn dev"
+    environment:
+      - HOST=0.0.0.0
+
+volumes:
+  npm-cache:
+  nuxt-cache:
