@@ -19,7 +19,11 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
     "core-js": "^3.15.1",
+    "install": "^0.13.0",
+    "node-sass": "^6.0.1",
+    "npm": "^7.24.0",
     "nuxt": "^2.15.7",
+    "sass-loader": "^10.2.0",
     "vuetify": "^2.5.5"
   },
   "devDependencies": {

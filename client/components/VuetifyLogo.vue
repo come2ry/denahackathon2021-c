@@ -1,12 +1,8 @@
 <template>
-  <img
-    class="VuetifyLogo"
-    alt="Vuetify Logo"
-    src="/vuetify-logo.svg"
-  >
+  <img class="VuetifyLogo" alt="Vuetify Logo" src="/vuetify-logo.svg" />
 </template>
 
-<style>
+<style lang="scss">
 .VuetifyLogo {
   height: 180px;
   width: 180px;
