@@ -1,0 +1,63 @@
+@startuml
+
+participant Client as client
+participant Server as server
+database "User Table" as usertable
+database "Geo Table" as geotable
+database "Locus Notify Table" as notifytable
+
+== Regularly post geo ==
+
+client -> server: POST /geo
+
+server -> usertable: update geo in user table
+
+note right: a dead user revive
+
+server -> geotable: insert geo to geo table for history
+
+server -> notifytable: check if the user was surrounded by someone
+
+alt when a record was found
+    notifytable -> server: return records
+    server --> client: return list of users
+else when a record was not found
+    notifytable -> server: return null
+    server --> client: return empty list
+end
+
+== Regularly get geo ==
+
+client -> server: GET /geo with search area
+
+server -> usertable: select users in the area
+
+usertable -> server: return users
+
+server --> client: return list of users
+
+== In Game ==
+
+client -> client: check if a user draw a closed curve
+
+alt when the user draw a closed curve
+    client -> server: POST /locus with the closed curve
+    server -> usertable: select geo
+    note over server, usertable: if a user was already dead, geo column data is null
+    usertable --> server: return geo
+    server -> server: check if someone is in the closed curve
+    alt if someone is in the closed curve
+        server -> notifytable: insert victim users
+        server -> usertable: update geo column data to null
+        note right: to avoid overkill
+        server --> client: return list of users
+    else if no one is in the closed curve
+        server --> client: return empty list
+    end
+
+else when the user do not draw a closed curve
+    note over client: do nothing
+end
+
+
+@enduml
