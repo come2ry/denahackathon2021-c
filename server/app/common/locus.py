@@ -1,6 +1,7 @@
 from app.common.geo import Geo
 from app.common.user import User
 from typing import Optional
+from sympy.geometry import Point, Polygon
 
 class Locus:
     def __init__(self, locus_id:Optional[int], user:Optional[User], geos:list[Geo]):
@@ -18,8 +19,8 @@ class Locus:
             'datetime': self.datetime
         }
 
-    def is_in(self, geo:Geo):
-        raise NotImplementedError()
+    def is_in(self, geo:Geo) -> bool:
+        return Polygon(*self.geos).encloses_point(Point(geo['latitude'],geo['longitude']))
 
     def get_rectangle(self):
         latitudes = [geo['latitude'] for geo in self.geos]
