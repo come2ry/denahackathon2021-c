@@ -11,11 +11,7 @@ export default {
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
-<<<<<<< HEAD
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-=======
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
->>>>>>> 344d071326311293cec8927222d0a5a563405dc2
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -34,7 +30,7 @@ export default {
     // https://go.nuxtjs.dev/stylelint
     '@nuxtjs/stylelint-module',
     // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
