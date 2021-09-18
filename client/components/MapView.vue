@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100vh">
+  <div id="mapid" style="height: 100vh">
     <client-only>
       <l-map :zoom="13" :center="[lat, lng]">
         <l-tile-layer
@@ -11,28 +11,36 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+
+type LL = [number, number]
+export default Vue.extend({
   data() {
+    const logs: LL[] = []
     return {
       lat: null,
       lng: null,
-      accu: null,
-      logs: []
+      logs
+    } as {
+      lat: number | null
+      lng: number | null
+      logs: LL[]
     }
   },
   watch: {
     logs(newLogs) {
       if (newLogs == null) return
+      const myMap = this.$L.map('mapid')
       this.$L
-        .polyline(newLogs, {
+        .polyline(newLogs as LL[], {
           color: 'green',
           weight: 2,
           fill: true,
           fillColor: 'green',
           opacity: 0.5
         })
-        .addTo(this.$L.myMap.mapObject)
+        .addTo(myMap)
     }
   },
   mounted() {
@@ -46,7 +54,7 @@ export default {
         // const accu = position.coords.accuracy // 緯度・経度の精度を取得
         this.lat = lat
         this.lng = lng
-        this.logs.push({ lat, lng })
+        this.logs.push([lat, lng])
       },
       (error) => {
         console.log(error)
@@ -56,5 +64,5 @@ export default {
       }
     )
   }
-}
+})
 </script>
