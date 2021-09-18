@@ -58,6 +58,16 @@ services:
       - "13036:3036"
     restart: always
 
+  swagger-ui:
+    image: swaggerapi/swagger-ui:latest
+    container_name: dena-hackathon-swagger
+    environment:
+      API_URL: api-document.yml
+    volumes:
+      - ./api-document.yml:/usr/share/nginx/html/api-document.yml
+    ports:
+      - 127.0.0.1:80:8080
+
 volumes:
   npm-cache:
   nuxt-cache:
