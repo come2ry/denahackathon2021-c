@@ -2,6 +2,7 @@
   <v-app dark>
     <v-navigation-drawer
       v-model="drawer"
+      class="nav-bar"
       :mini-variant="miniVariant"
       :clipped="clipped"
       fixed
@@ -93,3 +94,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.nav-bar {
+  z-index: 1500;
+}
+</style>
