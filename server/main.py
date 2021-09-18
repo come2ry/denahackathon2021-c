@@ -3,7 +3,7 @@ from pprint import pformat, pprint
 
 # ユーザ定義
 from app import create_app
-from flask_migrate import Migrate
+from flask_migrate import MigrateCommand
 from flask_script import Manager, Server
 from app.common import utils
 
@@ -13,7 +13,7 @@ env = os.environ.get('FLASK_ENV', 'development')  # default値は`development`
 app = create_app(env)
 
 manager = Manager(app)
-manager.add_command('db', Migrate)
+manager.add_command('db', MigrateCommand)
 manager.add_command('runserver', Server(
     host='0.0.0.0', port=os.environ.get('FLASK_RUN_PORT', 8080)))
 
