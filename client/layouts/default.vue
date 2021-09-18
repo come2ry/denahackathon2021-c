@@ -35,7 +35,11 @@
       <v-btn icon @click.stop="fixed = !fixed">
         <v-icon>mdi-minus</v-icon>
       </v-btn> -->
-      <v-toolbar-title v-text="title" />
+      <!-- <v-toolbar-title v-text="title" /> -->
+      <img height="36px" src="@/assets/logo.png" />
+      <v-avatar size="75px">
+        <img width="100%" src="@/assets/runner_w_trans.png" />
+      </v-avatar>
       <v-spacer />
       <!-- <v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>mdi-menu</v-icon>
