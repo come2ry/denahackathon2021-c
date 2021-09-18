@@ -26,7 +26,11 @@
         <tr>
           <td>
             <v-avater size="18px">
-              <img width="50%" alt="Avatar" src="@/assets/ranking/1.jpg" />
+              <img
+                width="50%"
+                alt="Avatar"
+                src="@/assets/ranking/1_w_trans.png"
+              />
             </v-avater>
           </td>
           <td class="icon">鳥</td>
@@ -36,7 +40,11 @@
         <tr>
           <td>
             <v-avater size="18px">
-              <img width="50%" alt="Avatar" src="@/assets/ranking/2.jpg" />
+              <img
+                width="50%"
+                alt="Avatar"
+                src="@/assets/ranking/2_w_trans.png"
+              />
             </v-avater>
           </td>
           <td class="icon">クジラ</td>
@@ -46,7 +54,11 @@
         <tr>
           <td>
             <v-avater size="18px">
-              <img width="50%" alt="Avatar" src="@/assets/ranking/3.jpg" />
+              <img
+                width="50%"
+                alt="Avatar"
+                src="@/assets/ranking/3_w_trans.png"
+              />
             </v-avater>
           </td>
           <td class="icon">カニ</td>
@@ -66,7 +78,7 @@ export default {
       lat: null,
       lng: null,
       accu: null,
-      logs: [],
+      logs: []
     }
   },
   mounted() {
@@ -85,10 +97,10 @@ export default {
         // エラー処理（今回は特に何もしない）
       },
       {
-        enableHighAccuracy: true, // 高精度で測定するオプション
+        enableHighAccuracy: true // 高精度で測定するオプション
       }
     )
-  },
+  }
 }
 </script>
 
