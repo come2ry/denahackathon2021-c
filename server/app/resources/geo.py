@@ -76,9 +76,9 @@ class GeoQuery(Resource):
             raise e  # DEBUG: デバッグ用
 
         users: list[User] = utils.get_user_geos(Geo(args.top, args.left), Geo(args.bottom, args.right))
-        result: dict = {users: [user.dump() for user in users]}
+        result: dict = {"users": [user.dump() for user in users]}
         response: Response = jsonify(result)
         response.status_code = 200
         return response
 
-api.add_resource(GeoQuery, "/geo/")
+api.add_resource(GeoQuery, "/geo")
