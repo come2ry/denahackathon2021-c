@@ -17,6 +17,44 @@
           <v-btn color="primary" nuxt to="/inspire"> Continue </v-btn>
         </v-card-actions>
       </v-card>
+      <table>
+        <tr>
+          <th>順位</th>
+          <th>ユーザー</th>
+          <th>ひとこと</th>
+          <th>住所</th>
+        </tr>
+        <tr>
+          <td>
+            <v-avater size="18px">
+              <img width="50%" alt="Avatar" src="@/assets/ranking/1.jpg" />
+            </v-avater>
+          </td>
+          <td class="icon">鳥</td>
+          <td>空を飛ぶのがすきです！</td>
+          <td>東京</td>
+        </tr>
+        <tr>
+          <td>
+            <v-avater size="18px">
+              <img width="50%" alt="Avatar" src="@/assets/ranking/2.jpg" />
+            </v-avater>
+          </td>
+          <td class="icon">クジラ</td>
+          <td>潮を吹くのがすきです！</td>
+          <td>北海道</td>
+        </tr>
+        <tr>
+          <td>
+            <v-avater size="18px">
+              <img width="50%" alt="Avatar" src="@/assets/ranking/3.jpg" />
+            </v-avater>
+          </td>
+          <td class="icon">カニ</td>
+          <td>反復横飛び鍛えてます</td>
+          <td>川</td>
+        </tr>
+      </table>
     </v-col>
   </v-row>
 </template>
@@ -55,3 +93,30 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  tr {
+    border-bottom: solid 1px #eee;
+    cursor: pointer;
+    &:hover {
+      background-color: #d4f0fd;
+    }
+  }
+  th,
+  td {
+    text-align: center;
+    width: 25%;
+    padding: 15px 0;
+  }
+  td.icon {
+    background-size: 35px;
+    background-position: left 5px center;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+  }
+}
+</style>
