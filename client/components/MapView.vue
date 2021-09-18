@@ -1,13 +1,11 @@
 <template>
-  <div id="mapid" style="height: 100vh">
-    <client-only>
-      <l-map :zoom="13" :center="[lat, lng]">
-        <l-tile-layer
-          url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
-        ></l-tile-layer>
-        <l-marker :lat-lng="[lat, lng]"></l-marker>
-      </l-map>
-    </client-only>
+  <div style="height: 100vh">
+    <l-map ref="myMap" :zoom="17" :center="[lat, lng]">
+      <l-tile-layer
+        url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+      ></l-tile-layer>
+      <l-marker :lat-lng="[lat, lng]"></l-marker>
+    </l-map>
   </div>
 </template>
 
@@ -22,9 +20,9 @@ export default Vue.extend({
   data() {
     const logs: LL[] = [
       [35.658318, 139.702231],
-      [35.6583, 139.702232],
-      [35.6582, 139.702232],
-      [35.6581, 139.702235]
+      [35.6583, 139.7021],
+      [35.6582, 139.702],
+      [35.6581, 139.7019]
     ].map((e) => ({
       lat: e[0],
       lng: e[1]
@@ -55,20 +53,31 @@ export default Vue.extend({
     }
   },
   mounted() {
+    // const myMap = this.$L.map('mapid')
+    // console.log(myMap)
+    this.$L
+      .polyline(
+        [
+          [35.658318, 139.702231],
+          [35.6583, 139.7021],
+          [35.6582, 139.702],
+          [35.6581, 139.7019]
+        ].map((e) => ({
+          lat: e[0],
+          lng: e[1]
+        })) as LL[],
+        {
+          color: 'green',
+          weight: 2,
+          fill: true,
+          fillColor: 'green',
+          opacity: 0.5
+        }
+      )
+      .addTo(this.$refs.myMap.mapObject)
     // GPS センサの値が変化したら何らか実行する geolocation.watchPosition メソッド
     navigator.geolocation.watchPosition(
       (position) => {
-        const myMap = this.$L.map('mapid')
-        console.log(myMap)
-        this.$L
-          .polyline(this.logs as LL[], {
-            color: 'green',
-            weight: 2,
-            fill: true,
-            fillColor: 'green',
-            opacity: 0.5
-          })
-          .addTo(myMap)
         const lat = position.coords.latitude // 緯度を取得
         const lng = position.coords.longitude // 経度を取得
         // const accu = position.coords.accuracy // 緯度・経度の精度を取得
