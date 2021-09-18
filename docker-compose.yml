@@ -32,8 +32,30 @@ services:
       FLASK_ENV: development
       FLASK_APP: app
       FLASK_RUN_PORT: 8080
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: test
+      DB_USER: test
+      DB_PASS: test
     ports:
       - "8081:8080"
+    depends_on:
+      - db
+    restart: always
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: test
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      TZ: "Asia/Tokyo"
+    volumes:
+      # - ../mysql:/docker-entrypoint-initdb.d
+      - ../mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    ports:
+      - "13036:3036"
     restart: always
 
   swagger-ui:

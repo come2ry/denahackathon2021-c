@@ -150,23 +150,21 @@ components:
           format: float
           description: 経度
     PostGeoResponse:
-      type: array
-      items:
-        type: object
-        properties:
-          locus_id:
-            type: integer
-            description: 軌跡 ID
-          user_id:
-            type: integer
-            description: ユーザ ID
-          username:
-            type: string
-            description: ユーザネーム
-          datetime:
-            type: string
-            format: date-time
-            description: 囲まれた日時
+      type: object
+      properties:
+        locus_id:
+          type: integer
+          description: 軌跡 ID
+        user_id:
+          type: integer
+          description: ユーザ ID
+        username:
+          type: string
+          description: ユーザネーム
+        datetime:
+          type: string
+          format: date-time
+          description: 囲まれた日時
     GetLocusResponse:
       type: object
       properties:
