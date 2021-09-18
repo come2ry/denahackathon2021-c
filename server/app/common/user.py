@@ -10,6 +10,6 @@ class User:
         return {
             'id': self.id,
             'username': self.username,
-            'latitude': self.geo.latitude,
-            'longitude': self.geo.longitude
+            'latitude': self.geo["latitude"],
+            'longitude': self.geo["longitude"]
         }
