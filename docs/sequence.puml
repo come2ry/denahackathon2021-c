@@ -19,11 +19,11 @@ server -> geotable: insert geo to geo table for history
 server -> notifytable: check if the user was surrounded by someone
 
 alt when a record was found
-    notifytable -> server: return records
-    server --> client: return list of users
+    notifytable -> server: return record
+    server --> client: return user
 else when a record was not found
     notifytable -> server: return null
-    server --> client: return empty list
+    server --> client: return null
 end
 
 == Regularly get geo ==
