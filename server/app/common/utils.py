@@ -50,7 +50,7 @@ def get_locus_by_id(locus_id:int) -> Locus:
         logger.error(f"<>...")
         raise e
 
-def get_locus_killed_me(user_id:int) -> list[Locus]:
+def get_locus_killed_me(user_id:int) -> Locus:
     try:
         return db.find_locus_by_killed_user(user_id)
     except Exception as e:
