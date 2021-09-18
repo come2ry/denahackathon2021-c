@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "leaflet": "^1.7.1",
+    "vue2-leaflet": "^2.7.1"
+  }
+}
