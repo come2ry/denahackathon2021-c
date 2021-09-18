@@ -11,11 +11,10 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { LL } from '@/utils/baseType'
+import { genRandomPath } from '~/utils/genRandomPath'
+import { findLoci } from '~/utils/log'
 
-type LL = {
-  lat: number
-  lng: number
-}
 export default Vue.extend({
   data() {
     const logs: LL[] = [
@@ -55,26 +54,17 @@ export default Vue.extend({
   mounted() {
     // const myMap = this.$L.map('mapid')
     // console.log(myMap)
+    const randomPath = genRandomPath({ lat: 35.658318, lng: 139.702231 }, 100)
+    console.log(findLoci(randomPath))
     this.$L
-      .polyline(
-        [
-          [35.658318, 139.702231],
-          [35.6583, 139.7021],
-          [35.6582, 139.702],
-          [35.6581, 139.7019]
-        ].map((e) => ({
-          lat: e[0],
-          lng: e[1]
-        })) as LL[],
-        {
-          color: 'green',
-          weight: 2,
-          fill: true,
-          fillColor: 'green',
-          opacity: 0.5
-        }
-      )
-      .addTo(this.$refs.myMap.mapObject)
+      .polyline(randomPath, {
+        color: 'green',
+        weight: 2,
+        fill: true,
+        fillColor: 'green',
+        opacity: 0.5
+      })
+      .addTo((this.$refs.myMap as any).mapObject)
     // GPS センサの値が変化したら何らか実行する geolocation.watchPosition メソッド
     navigator.geolocation.watchPosition(
       (position) => {
