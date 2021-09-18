@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  client:
+    build:
+      context: ./client
+      target: "development"
+    volumes:
+      - ./client:/client
+      - npm-cache:/client/node_modules
+      - nuxt-cache:/client/.nuxt
+    ports:
+      - "3000:3000"
+    working_dir: /client
+    command: sh -c "yarn && yarn dev"
+    environment:
+      - HOST=0.0.0.0
+
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+      target: development
+    tty: true
+    volumes:
+      - type: bind
+        source: ./server
+        target: /server
+    working_dir: /server
+    # command: python main.py
+    environment:
+      FLASK_ENV: development
+      FLASK_APP: app
+      FLASK_RUN_PORT: 8080
+    ports:
+      - "8081:8080"
+    restart: always
+
+volumes:
+  npm-cache:
+  nuxt-cache:

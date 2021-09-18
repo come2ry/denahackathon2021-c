@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Flask Debug",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "jinja": true,
+        }
+    ]
+}
