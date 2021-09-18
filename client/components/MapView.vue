@@ -1,10 +1,12 @@
 <template>
-  <div style="height: 100vh">
-    <l-map ref="myMap" :zoom="17" :center="[lat, lng]">
+  <div style="height: 100vh; z-index: -1">
+    <l-map ref="myMap" :zoom="17" :center="[mapLat, mapLng]">
       <l-tile-layer
         url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
       ></l-tile-layer>
-      <l-marker :lat-lng="[lat, lng]"></l-marker>
+      <l-marker ref="myMarker" name="あなた" :lat-lng="[lat, lng]">
+        <l-tooltip content="あなた"></l-tooltip>
+      </l-marker>
     </l-map>
   </div>
 </template>
@@ -17,21 +19,23 @@ import { findLoci } from '~/utils/log'
 
 export default Vue.extend({
   data() {
-    const logs: LL[] = [
-      [35.658318, 139.702231],
-      [35.6583, 139.7021],
-      [35.6582, 139.702],
-      [35.6581, 139.7019]
-    ].map((e) => ({
-      lat: e[0],
-      lng: e[1]
-    }))
+    // const logs: LL[] = [
+    //   [35.658318, 139.702231],
+    //   [35.6583, 139.7021],
+    //   [35.6582, 139.702],
+    //   [35.6581, 139.7019]
+    // ].map((e) => ({
+    //   lat: e[0],
+    //   lng: e[1]
+    // }))
     return {
+      mapLat: 35.658319,
+      mapLng: 139.702232,
       lat: 35.658319,
       lng: 139.702232,
-      logs,
+      logs: [] as LL[],
       demo: true,
-      k: 1
+      k: 0
     }
   },
   watch: {
@@ -53,6 +57,7 @@ export default Vue.extend({
     // console.log(myMap)
     const randomPath = genRandomPath({ lat: 35.658318, lng: 139.702231 }, 100)
     console.log(findLoci(randomPath))
+
     // this.$L
     //   .polyline(randomPath, {
     //     color: 'green',
@@ -63,10 +68,16 @@ export default Vue.extend({
     //   })
     //   .addTo((this.$refs.myMap as any).mapObject)
     if (this.demo) {
-      setInterval(() => {
+      const timer = setInterval(() => {
+        if (this.k >= randomPath.length) {
+          clearInterval(timer)
+        }
+        this.logs = randomPath.slice(0, this.k + 1)
+
+        this.lng = randomPath[this.k].lng
+        this.lat = randomPath[this.k].lat
         this.k++
-        this.logs = randomPath.slice(0, this.k)
-      }, 100)
+      }, 200)
     }
     // GPS センサの値が変化したら何らか実行する geolocation.watchPosition メソッド
     navigator.geolocation.watchPosition(
@@ -76,6 +87,8 @@ export default Vue.extend({
         // const accu = position.coords.accuracy // 緯度・経度の精度を取得
         this.lat = lat
         this.lng = lng
+        this.mapLat = lat
+        this.mapLng = lng
         this.logs.push({ lat, lng })
       },
       (error) => {
@@ -85,6 +98,13 @@ export default Vue.extend({
         enableHighAccuracy: true // 高精度で測定するオプション
       }
     )
+  },
+  methods: {
+    openDefaultMarkers(mapObject: any, nextMarker: any) {
+      if (nextMarker.opened) {
+        mapObject.openPopup()
+      }
+    }
   }
 })
 </script>
