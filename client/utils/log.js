@@ -45,8 +45,8 @@ export function checkCross(i, j, logs) {
 
 function _checkCross(a, b, c, d) {
   const s =
-    (a.lon - b.lon) * (c.lat - a.lat) - (a.lat - b.lat) * (c.lon - a.lon)
+    (a.lng - b.lng) * (c.lat - a.lat) - (a.lat - b.lat) * (c.lng - a.lng)
   const t =
-    (a.lon - b.lon) * (d.lat - a.lat) - (a.lat - b.lat) * (d.lon - a.lon)
+    (a.lng - b.lng) * (d.lat - a.lat) - (a.lat - b.lat) * (d.lng - a.lng)
   return s * t <= 0
 }

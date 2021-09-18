@@ -14,7 +14,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" nuxt to="/inspire"> Continue </v-btn>
+          <v-btn color="primary" nuxt to="/map"> Continue </v-btn>
         </v-card-actions>
       </v-card>
       <table>
@@ -71,7 +71,6 @@ export default {
     }
   },
   mounted() {
-    console.log('here')
     // GPS センサの値が変化したら何らか実行する geolocation.watchPosition メソッド
     navigator.geolocation.watchPosition(
       (position) => {
