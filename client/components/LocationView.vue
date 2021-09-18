@@ -12,12 +12,12 @@ export default {
       geo: null,
       locus: null,
       loading: true,
-      errored: false,
+      errored: false
     }
   },
   mounted() {
     this.$axios
-      .$get('http://localhost:8080/api/v1/geo')
+      .$get('http://localhost:8081/api/v1/geo')
       .then((response) => (this.geo = response))
       .catch((error) => {
         // エラー処理
@@ -25,13 +25,13 @@ export default {
         this.errored = true
       })
     this.$axios
-      .$get('http://localhost:8080/api/v1/locus')
+      .$get('http://localhost:8081/api/v1/locus')
       .then((response) => (this.locus = response))
       .catch((error) => {
         // エラー処理
         console.log(error)
         this.errored = true
       })
-  },
+  }
 }
 </script>

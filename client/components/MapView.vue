@@ -29,26 +29,23 @@ export default Vue.extend({
     return {
       lat: 35.658319,
       lng: 139.702232,
-      logs
-    } as {
-      lat: number
-      lng: number
-      logs: LL[]
+      logs,
+      demo: true,
+      k: 1
     }
   },
   watch: {
     logs(newLogs) {
       if (newLogs == null) return
-      const myMap = this.$L.map('mapid')
       this.$L
         .polyline(newLogs as LL[], {
           color: 'green',
           weight: 2,
-          fill: true,
-          fillColor: 'green',
+          // fill: true,
+          // fillColor: 'green',
           opacity: 0.5
         })
-        .addTo(myMap)
+        .addTo((this.$refs.myMap as any).mapObject)
     }
   },
   mounted() {
@@ -56,15 +53,21 @@ export default Vue.extend({
     // console.log(myMap)
     const randomPath = genRandomPath({ lat: 35.658318, lng: 139.702231 }, 100)
     console.log(findLoci(randomPath))
-    this.$L
-      .polyline(randomPath, {
-        color: 'green',
-        weight: 2,
-        fill: true,
-        fillColor: 'green',
-        opacity: 0.5
-      })
-      .addTo((this.$refs.myMap as any).mapObject)
+    // this.$L
+    //   .polyline(randomPath, {
+    //     color: 'green',
+    //     weight: 2,
+    //     fill: true,
+    //     fillColor: 'green',
+    //     opacity: 0.5
+    //   })
+    //   .addTo((this.$refs.myMap as any).mapObject)
+    if (this.demo) {
+      setInterval(() => {
+        this.k++
+        this.logs = randomPath.slice(0, this.k)
+      }, 100)
+    }
     // GPS センサの値が変化したら何らか実行する geolocation.watchPosition メソッド
     navigator.geolocation.watchPosition(
       (position) => {
