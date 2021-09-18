@@ -1,10 +1,5 @@
 # client
 
-```
-git clone -b client git@github.com:come2ry/denahackathon2021-c.git
-git push origin client
-```
-
 ## Build Setup
 
 ```bash
@@ -46,6 +41,7 @@ Layouts are a great help when you want to change the look and feel of your Nuxt 
 
 More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
 
+
 ### `pages`
 
 This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
@@ -71,22 +67,3 @@ More information about the usage of this directory in [the documentation](https:
 This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
 
 More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
-
-## SCSS の導入
-
-https://www.suzu6.net/posts/173-nuxt-scss/
-のとおりにおこなった
-
-## Docker
-
-### make docker image
-
-```
-docker build --tag <name>:<version> .
-```
-
-### run docker container
-
-```
-docker run --name <container-name> -p 3000:3000 <image-name>:<version>
-```
