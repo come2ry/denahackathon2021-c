@@ -2,8 +2,7 @@
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
       <v-card class="logo py-4 d-flex justify-center">
-        <NuxtLogo />
-        <VuetifyLogo />
+        <LocationView />
       </v-card>
       <v-card>
         <v-card-title class="headline">
@@ -67,7 +66,7 @@ export default {
       lat: null,
       lng: null,
       accu: null,
-      logs: []
+      logs: [],
     }
   },
   mounted() {
@@ -86,10 +85,10 @@ export default {
         // エラー処理（今回は特に何もしない）
       },
       {
-        enableHighAccuracy: true // 高精度で測定するオプション
+        enableHighAccuracy: true, // 高精度で測定するオプション
       }
     )
-  }
+  },
 }
 </script>
 
