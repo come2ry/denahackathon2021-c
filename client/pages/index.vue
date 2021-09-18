@@ -7,71 +7,116 @@
       </v-card>
       <v-card>
         <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
+          緯度{{ lat }}と経度{{ lng }}
         </v-card-title>
         <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
-          <p>
-            For more information on Vuetify, check out the <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation
-            </a>.
-          </p>
-          <p>
-            If you have questions, please join the official <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord
-            </a>.
-          </p>
-          <p>
-            Find a bug? Report it on the github <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board
-            </a>.
-          </p>
-          <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3">
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt Documentation
-          </a>
-          <br>
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
+          {{ logs }}
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn
-            color="primary"
-            nuxt
-            to="/inspire"
-          >
-            Continue
-          </v-btn>
+          <v-btn color="primary" nuxt to="/inspire"> Continue </v-btn>
         </v-card-actions>
       </v-card>
+      <table>
+        <tr>
+          <th>順位</th>
+          <th>ユーザー</th>
+          <th>ひとこと</th>
+          <th>住所</th>
+        </tr>
+        <tr>
+          <td>
+            <v-avater size="18px">
+              <img width="50%" alt="Avatar" src="@/assets/ranking/1.jpg" />
+            </v-avater>
+          </td>
+          <td class="icon">鳥</td>
+          <td>空を飛ぶのがすきです！</td>
+          <td>東京</td>
+        </tr>
+        <tr>
+          <td>
+            <v-avater size="18px">
+              <img width="50%" alt="Avatar" src="@/assets/ranking/2.jpg" />
+            </v-avater>
+          </td>
+          <td class="icon">クジラ</td>
+          <td>潮を吹くのがすきです！</td>
+          <td>北海道</td>
+        </tr>
+        <tr>
+          <td>
+            <v-avater size="18px">
+              <img width="50%" alt="Avatar" src="@/assets/ranking/3.jpg" />
+            </v-avater>
+          </td>
+          <td class="icon">カニ</td>
+          <td>反復横飛び鍛えてます</td>
+          <td>川</td>
+        </tr>
+      </table>
     </v-col>
   </v-row>
 </template>
+
+<script>
+export default {
+  setup() {},
+  data() {
+    return {
+      lat: null,
+      lng: null,
+      accu: null,
+      logs: []
+    }
+  },
+  mounted() {
+    console.log('here')
+    // GPS センサの値が変化したら何らか実行する geolocation.watchPosition メソッド
+    navigator.geolocation.watchPosition(
+      (position) => {
+        const lat = position.coords.latitude // 緯度を取得
+        const lng = position.coords.longitude // 経度を取得
+        // const accu = position.coords.accuracy // 緯度・経度の精度を取得
+        this.lat = lat
+        this.lng = lng
+        this.logs.push({ lat, lng })
+      },
+      (error) => {
+        console.log(error)
+        // エラー処理（今回は特に何もしない）
+      },
+      {
+        enableHighAccuracy: true // 高精度で測定するオプション
+      }
+    )
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  tr {
+    border-bottom: solid 1px #eee;
+    cursor: pointer;
+    &:hover {
+      background-color: #d4f0fd;
+    }
+  }
+  th,
+  td {
+    text-align: center;
+    width: 25%;
+    padding: 15px 0;
+  }
+  td.icon {
+    background-size: 35px;
+    background-position: left 5px center;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+  }
+}
+</style>
