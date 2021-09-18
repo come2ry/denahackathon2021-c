@@ -3,7 +3,7 @@ info:
   title: DeNA Autumn Hackathon C Team
   version: 1.0.0
 servers:
-  - url: http://localhost:8080/api/v1
+  - url: http://localhost:8081/api/v1
 tags:
   - name: geo
     description: 位置情報関連 API
