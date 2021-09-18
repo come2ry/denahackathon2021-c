@@ -1,0 +1,233 @@
+openapi: 3.0.2
+info:
+  title: DeNA Autumn Hackathon C Team
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api/v1
+tags:
+  - name: geo
+    description: 位置情報関連 API
+  - name: locus
+    description: 移動軌跡関連 API
+paths:
+  /geo:
+    get:
+      tags:
+        - geo
+      summary: 位置情報取得 API
+      description: |
+        位置情報を取得します。
+      parameters:
+        - in: query
+          name: top
+          schema:
+            type: number
+            format: float
+          required: true
+        - in: query
+          name: bottom
+          schema:
+            type: number
+            format: float
+          required: true
+        - in: query
+          name: left
+          schema:
+            type: number
+            format: float
+          required: true
+        - in: query
+          name: right
+          schema:
+            type: number
+            format: float
+          required: true
+      responses:
+        200:
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetGeoResponse"
+    post:
+      tags:
+        - geo
+      summary: 位置情報アップロード API
+      description: |
+        位置情報をアップロードします。
+        もし、リクエストしたユーザが前回位置情報を送信してから誰かに囲まれていた場合、囲まれた情報を返します。
+      requestBody:
+        description: Request Body
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostGeoRequest"
+        required: true
+      responses:
+        200:
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PostGeoResponse"
+  /locus:
+    post:
+      tags:
+        - locus
+      summary: 移動軌跡チェック API
+      description: |
+        移動軌跡を送信します。
+        もし、軌跡の中にユーザが存在すれば、囲んだユーザとその位置情報を返します。
+      requestBody:
+        description: Request Body
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostLocusRequest"
+        required: true
+      responses:
+        200:
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PostLocusResponse"
+  /locus/{id}:
+    get:
+      tags:
+        - locus
+      summary: 移動軌跡取得 API
+      description: |
+        移動軌跡を取得します。
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetLocusResponse"
+
+components:
+  schemas:
+    GetGeoResponse:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: ユーザ ID
+              username:
+                type: string
+                description: ユーザネーム
+              latitude:
+                type: number
+                format: float
+              longitude:
+                type: number
+                format: float
+    PostGeoRequest:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          description: ユーザ ID
+        latitude:
+          type: number
+          format: float
+          description: 緯度
+        longitude:
+          type: number
+          format: float
+          description: 経度
+    PostGeoResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          locus_id:
+            type: integer
+            description: 軌跡 ID
+          user_id:
+            type: integer
+            description: ユーザ ID
+          username:
+            type: string
+            description: ユーザネーム
+          datetime:
+            type: string
+            format: date-time
+            description: 囲まれた日時
+    GetLocusResponse:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          description: ユーザ ID
+        username:
+          type: string
+          description: ユーザネーム
+        locus:
+          type: array
+          items:
+            type: object
+            properties:
+              latitude:
+                type: number
+                format: float
+                description: 緯度
+              longitude:
+                type: number
+                format: float
+                description: 経度
+    PostLocusRequest:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          description: ユーザID
+        locus:
+          type: array
+          items:
+            type: object
+            properties:
+              latitude:
+                type: number
+                format: float
+                description: 緯度
+              longitude:
+                type: number
+                format: float
+                description: 経度
+    PostLocusResponse:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: ユーザ ID
+              username:
+                type: string
+                description: ユーザネーム
+              latitude:
+                type: number
+                format: float
+              longitude:
+                type: number
+                format: float
+
+
+
