@@ -37,7 +37,7 @@ class LocusQuery(Resource):
             raise e  # DEBUG: デバッグ用
 
         user_id = request_json_data['user_id']
-        geos:list[Geo] = [Geo(geo['latitude'], geo['longitude']) for geo in request_json_data['locus']]
+        geos:list[Geo] = [Geo(latitude=geo['latitude'], longitude=geo['longitude']) for geo in request_json_data['locus']]
         locus = Locus(geos=geos)
         locus_id = utils.put_user_locus(user_id, locus)
         locus.locus_id = locus_id
