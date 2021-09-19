@@ -35,7 +35,7 @@ export default Vue.extend({
       lng: 139.702232,
       logs: [] as LL[],
       demo: true,
-      k: 0
+      k: 0,
     }
   },
   watch: {
@@ -47,10 +47,10 @@ export default Vue.extend({
           weight: 2,
           // fill: true,
           // fillColor: 'green',
-          opacity: 0.5
+          opacity: 0.5,
         })
         .addTo((this.$refs.myMap as any).mapObject)
-    }
+    },
   },
   mounted() {
     // const myMap = this.$L.map('mapid')
@@ -95,9 +95,9 @@ export default Vue.extend({
         console.log(error)
       },
       {
-        enableHighAccuracy: true // 高精度で測定するオプション
+        enableHighAccuracy: true, // 高精度で測定するオプション
       }
     )
-  }
+  },
 })
 </script>
