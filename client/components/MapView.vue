@@ -98,13 +98,6 @@ export default Vue.extend({
         enableHighAccuracy: true // 高精度で測定するオプション
       }
     )
-  },
-  methods: {
-    openDefaultMarkers(mapObject: any, nextMarker: any) {
-      if (nextMarker.opened) {
-        mapObject.openPopup()
-      }
-    }
   }
 })
 </script>
