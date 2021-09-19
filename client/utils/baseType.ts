@@ -8,3 +8,7 @@ export type LL = {
 export type DLL = LL & {
   date: Dayjs
 }
+
+export type ULL = LL & {
+  username: string
+}
