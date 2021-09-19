@@ -94,8 +94,11 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {}
+  build: {},
   // Nuxt内にサーバ側固有の処理を持たせる
   // serverMiddleware: ['~~/api/'],
   // srcDir: './',
+  publicRuntimeConfig: {
+    baseURL: process.env.NUXT_APP_BACK_HOST || 'http://localhost:8081'
+  }
 }

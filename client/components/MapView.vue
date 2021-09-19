@@ -115,7 +115,7 @@ export default Vue.extend({
       for (const locus of loci) {
         try {
           const res = await this.$axios.$post(
-            `http://localhost:8081/api/v1/locus`,
+            `${this.$config.baseURL}/api/v1/locus`,
             {
               user_id: this.id,
               locus: locus.map((e) => ({
@@ -138,7 +138,7 @@ export default Vue.extend({
       const left = this.mapLng - len
       const right = this.mapLng + len
       const res = await this.$axios.$get(
-        `http://localhost:8081/api/v1/geo?top=${top}&bottom=${bottom}&left=${left}&right=${right}`
+        `${this.$config.baseURL}/api/v1/geo?top=${top}&bottom=${bottom}&left=${left}&right=${right}`
       )
       console.log(res)
       this.otherUsers = res.users
@@ -150,7 +150,7 @@ export default Vue.extend({
         }))
       // console.log(this.otherUsers)
       const resUser = (await this.$axios.$post(
-        'http://localhost:8081/api/v1/geo',
+        `${this.$config.baseURL}/api/v1/geo`,
         {
           user_id: this.id,
           latitude: this.lat,
@@ -160,7 +160,7 @@ export default Vue.extend({
       console.log(resUser)
       if (resUser.locus_id != null) {
         const resLocus = (await this.$axios.get(
-          `http://localhost:8081/api/v1/locus/${resUser.locus_id}`
+          `${this.$config.baseURL}/api/v1/locus/${resUser.locus_id}`
         )) as any
         console.log(resLocus)
         this.surroundedLocus = new Locus(resLocus)
