@@ -1,5 +1,4 @@
 from app.models import db, Base, datetime_jstnow
-from geoalchemy2 import Geometry  # type: ignore
 from sqlalchemy.orm import backref, relationship
 
 locus_geos_table = db.Table('locus_geos', Base.metadata,
@@ -25,6 +24,14 @@ class Locus(Base):
         secondary=locus_geos_table,
     )
 
+    user = relationship(
+        'User',
+        primaryjoin="User.id == Locus.user_id",
+        backref=backref('locus',
+                        uselist=False,
+                        cascade='delete,all'),
+        uselist=False,
+    )
 
 class LocusNotify(Base):
     __tablename__ = 'locusNotify'
@@ -40,6 +47,15 @@ class LocusNotify(Base):
         primaryjoin="User.id == LocusNotify.victim_user_id",
         backref=backref('locus_notify',
                         uselist=False,
+                        cascade='delete,all'),
+        uselist=False,
+    )
+
+    locus = relationship(
+        'Locus',
+        primaryjoin="Locus.id == LocusNotify.locus_id",
+        backref=backref('locus_notifies',
+                        uselist=True,
                         cascade='delete,all'),
         uselist=False,
     )

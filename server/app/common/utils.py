@@ -8,6 +8,7 @@ from app.common.locus import Locus
 from app.common.user import User
 from app.common import db
 
+
 def create_sample_user(user_data: dict) -> None:
     try:
         datastore.SAMPLE_USERS[len(datastore.SAMPLE_USERS) + 1] = user_data
@@ -16,43 +17,49 @@ def create_sample_user(user_data: dict) -> None:
         logger.error(f"<SampleUser {json.dumps(user_data)}>の作成処理 失敗")
         raise e
 
-def get_user_geos(top_left:Geo, bottom_right:Geo) -> list[User]:
+
+def get_user_geos(top_left: Geo, bottom_right: Geo) -> list[User]:
     try:
         return db.find_users_by_rectangle(top_left, bottom_right)
     except Exception as e:
         logger.error(f"<>...")
         raise e
 
-def put_user_geo(user_id:int, geo:Geo) -> None:
+
+def put_user_geo(user_id: int, geo: Geo) -> None:
     try:
         db.insert_geo_history(user_id, geo)
     except Exception as e:
         logger.error(f"<>...")
         raise e
 
-def put_user_locus(user_id:int, locus:Locus) -> int:
+
+def put_user_locus(user_id: int, locus: Locus) -> int:
     try:
-        locus_id:int = db.insert_locus(user_id, locus)
+        locus_id: int = db.insert_locus(user_id, locus)
         return locus_id
     except Exception as e:
         logger.error(f"<>...")
         raise e
 
-def get_near_users(top_left:Geo, bottom_right:Geo) -> list[User]:
+
+def get_near_users(top_left: Geo, bottom_right: Geo) -> list[User]:
     try:
         return db.find_users_by_rectangle(top_left, bottom_right)
     except Exception as e:
         logger.error(f"<>...")
         raise e
 
-def get_locus_by_id(locus_id:int) -> Locus:
+
+def get_locus_by_id(locus_id: int) -> Locus:
     try:
         return db.find_locus(locus_id)
     except Exception as e:
         logger.error(f"<>...")
         raise e
 
-def get_locus_by_victim(user_id:int) -> Optional[Locus]:
+
+def get_locus_by_victim(user_id: int) -> Optional[Locus]:
     try:
         return db.find_locus_by_victim(user_id)
     except Exception as e:

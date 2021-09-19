@@ -6,12 +6,15 @@ from flask_restful import Api, Resource, abort, reqparse, url_for
 from datetime import date, datetime
 from typing import Optional, Any
 import json
-from app.common.geo import Geo
-from app.common.locus import Locus
-from app.common.user import User
+# from app.common.geo import Geo
+# from app.common.locus import Locus
+# from app.common.user import User
+from database import SessionLocal as session
+import models
 
 api_bp = Blueprint("geo", __name__)
 api = Api(api_bp)
+
 
 class GeoQuery(Resource):
     def post(self) -> Response:
@@ -27,10 +30,27 @@ class GeoQuery(Resource):
             # abort(500, message="入力パラメータの解析失敗")
             raise e  # DEBUG: デバッグ用
 
-        utils.put_user_geo(request_json_data['user_id'], Geo(latitude=request_json_data['latitude'], longitude=request_json_data['longitude']))
-        locus: Locus = utils.get_locus_by_victim(request_json_data['user_id'])
+        user_id = request_json_data['user_id']
+        latitude = request_json_data['latitude']
+        longitude = request_json_data['longitude']
 
-        result: dict = {k:v for k,v in locus.dump().items() if k!="geos"}
+        new_geo = models.Geo(
+            user_id=user_id,
+            latlng=f"POINT ({latitude} {longitude})",
+        )
+        session.add(new_geo)
+        session.commit()
+        # utils.put_user_geo(request_json_data['user_id'], models.Geo(
+        #     latitude=request_json_data['latitude'], longitude=request_json_data['longitude']))
+        locus_notify: models.Locus = utils.get_locus_by_victim(user_id)
+
+        result: dict = {
+            'locus_id': locus_notify.locus_id,
+            'user_id': locus_notify.locus.user_id,
+            'user_name': locus_notify.locus.user.user_name,
+            'datetime': locus_notify.created_at
+        }
+        # result: dict = {k: v for k, v in locus.dump().items() if k != "geos"}
         response: Response = jsonify(result)
         response.status_code = 200
         return response
@@ -72,13 +92,15 @@ class GeoQuery(Resource):
             args = parser.parse_args(strict=True)
             print(args)
         except Exception as e:
-        #     # abort(500, message="入力パラメータの解析失敗")
+            #     # abort(500, message="入力パラメータの解析失敗")
             raise e  # DEBUG: デバッグ用
 
-        users: list[User] = utils.get_user_geos(Geo(latitude=args.top, longitude=args.left), Geo(latitude=args.bottom, longitude=args.right))
+        users: list[User] = utils.get_user_geos(Geo(latitude=args.top, longitude=args.left), Geo(
+            latitude=args.bottom, longitude=args.right))
         result: dict = {"users": [user.dump() for user in users]}
         response: Response = jsonify(result)
         response.status_code = 200
         return response
+
 
 api.add_resource(GeoQuery, "/geo")
