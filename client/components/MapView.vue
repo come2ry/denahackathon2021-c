@@ -16,17 +16,25 @@
       <l-tile-layer
         url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
       ></l-tile-layer>
-      <l-marker ref="myMarker" name="あなた" :lat-lng="[lat, lng]">
+      <l-marker
+        v-if="icon !== null"
+        ref="myMarker"
+        name="あなた"
+        :lat-lng="[lat, lng]"
+        icon="icon"
+      >
         <l-tooltip content="あなた"></l-tooltip>
       </l-marker>
-      <l-marker
+      <l-circle-marker
         v-for="user of otherUsers"
         :key="user.id"
         :name="user.username"
         :lat-lng="[user.lat, user.lng]"
+        :icon="icon"
+        :color="circle.color"
       >
         <l-tooltip :content="user.username"></l-tooltip>
-      </l-marker>
+      </l-circle-marker>
     </l-map>
   </div>
 </template>
@@ -48,9 +56,15 @@ export default Vue.extend({
     //   lat: e[0],
     //   lng: e[1]
     // }))
+
     const lat = 35.658319
     const lng = 139.702232
     const otherUsers = randomScatter({ lat, lng }, 30)
+    // const icon = this.$L.icon({
+    //   iconUrl: '/images/baseball-marker.png',
+    //   iconSize: [32, 37],
+    //   iconAnchor: [16, 37],
+    // })
     return {
       mapLat: lat,
       mapLng: lng,
@@ -65,7 +79,13 @@ export default Vue.extend({
       otherUsers,
       id: 1,
       myUser: null as ULL | null,
-      msg: ''
+      msg: '',
+      icon: null as any,
+      circle: {
+        center: [47.41322, -1.0482],
+        radius: 6,
+        color: 'red',
+      },
     }
   },
   watch: {
@@ -77,7 +97,7 @@ export default Vue.extend({
           weight: 2,
           // fill: true,
           // fillColor: 'green',
-          opacity: 0.5
+          opacity: 0.5,
         })
         .addTo((this.$refs.myMap as any).mapObject)
     },
@@ -90,11 +110,11 @@ export default Vue.extend({
             weight: 4,
             // fill: true,
             // fillColor: 'green',
-            opacity: 0.5
+            opacity: 0.5,
           })
           .addTo((this.$refs.myMap as any).mapObject)
       }
-    }
+    },
   },
   mounted() {
     // const myMap = this.$L.map('mapid')
@@ -110,6 +130,11 @@ export default Vue.extend({
     //     opacity: 0.5
     //   })
     //   .addTo((this.$refs.myMap as any).mapObject)
+    this.icon = this.$L.icon({
+      iconUrl: '/images/baseball-marker.png',
+      iconSize: [32, 37],
+      iconAnchor: [16, 37],
+    })
     let timer: NodeJS.Timer | null = null
     if (this.demo) {
       timer = setInterval(() => {
@@ -174,7 +199,7 @@ export default Vue.extend({
         console.log(error)
       },
       {
-        enableHighAccuracy: true // 高精度で測定するオプション
+        enableHighAccuracy: true, // 高精度で測定するオプション
       }
     )
   },
@@ -197,7 +222,7 @@ export default Vue.extend({
         .map((u: any) => ({
           lat: u.latitude,
           lng: u.longitude,
-          ...u
+          ...u,
         }))
       // console.log(this.otherUsers)
       const resUser = (await this.$axios.$post(
@@ -205,12 +230,12 @@ export default Vue.extend({
         {
           user_id: this.id,
           latitude: this.lat,
-          longitude: this.lng
+          longitude: this.lng,
         }
       )) as any
       console.log(resUser)
-    }
-  }
+    },
+  },
 })
 </script>
 <style lang="scss" scoped>
@@ -221,5 +246,16 @@ button {
   left: 50%;
   margin: 0;
   padding: 0;
+}
+.someExtraClass {
+  background-color: aqua;
+  padding: 10px;
+  border: 1px solid #333;
+  border-radius: 0 20px 20px 20px;
+  box-shadow: 5px 3px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
 }
 </style>
