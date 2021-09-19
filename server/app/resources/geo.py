@@ -27,8 +27,8 @@ class GeoQuery(Resource):
             # abort(500, message="入力パラメータの解析失敗")
             raise e  # DEBUG: デバッグ用
 
-        utils.put_user_geo(request_json_data['user_id'], Geo(request_json_data['latitude'], request_json_data['longitude']))
-        locus: Locus = utils.get_locus_killed_me(request_json_data['user_id'])
+        utils.put_user_geo(request_json_data['user_id'], Geo(latitude=request_json_data['latitude'], longitude=request_json_data['longitude']))
+        locus: Locus = utils.get_locus_by_victim(request_json_data['user_id'])
 
         result: dict = {k:v for k,v in locus.dump().items() if k!="geos"}
         response: Response = jsonify(result)
@@ -75,7 +75,7 @@ class GeoQuery(Resource):
         #     # abort(500, message="入力パラメータの解析失敗")
             raise e  # DEBUG: デバッグ用
 
-        users: list[User] = utils.get_user_geos(Geo(args.top, args.left), Geo(args.bottom, args.right))
+        users: list[User] = utils.get_user_geos(Geo(latitude=args.top, longitude=args.left), Geo(latitude=args.bottom, longitude=args.right))
         result: dict = {"users": [user.dump() for user in users]}
         response: Response = jsonify(result)
         response.status_code = 200

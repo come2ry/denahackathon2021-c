@@ -2,9 +2,11 @@
 from logger import logger
 from . import datastore
 import json
+from typing import Optional
 from app.common.geo import Geo
 from app.common.locus import Locus
 from app.common.user import User
+from app.common import db
 
 def create_sample_user(user_data: dict) -> None:
     try:
@@ -16,23 +18,20 @@ def create_sample_user(user_data: dict) -> None:
 
 def get_user_geos(top_left:Geo, bottom_right:Geo) -> list[User]:
     try:
-        return [User(12, "user_name_test", Geo(15.622, 137.610))]
-        return db.find_geos_by_rectangle(top_left, bottom_right)
+        return db.find_users_by_rectangle(top_left, bottom_right)
     except Exception as e:
         logger.error(f"<>...")
         raise e
 
 def put_user_geo(user_id:int, geo:Geo) -> None:
     try:
-        pass
-        # db.insert_geo_history(user_id, geo)
+        db.insert_geo_history(user_id, geo)
     except Exception as e:
         logger.error(f"<>...")
         raise e
 
-def put_user_locus(user_id:int, locus:list[dict]) -> int:
+def put_user_locus(user_id:int, locus:Locus) -> int:
     try:
-        return 15
         locus_id:int = db.insert_locus(user_id, locus)
         return locus_id
     except Exception as e:
@@ -41,24 +40,21 @@ def put_user_locus(user_id:int, locus:list[dict]) -> int:
 
 def get_near_users(top_left:Geo, bottom_right:Geo) -> list[User]:
     try:
-        return [User(12, "user_name_test", Geo(15.622, 137.610))]
-        return db.find_users(top_left, bottom_right)
+        return db.find_users_by_rectangle(top_left, bottom_right)
     except Exception as e:
         logger.error(f"<>...")
         raise e
 
 def get_locus_by_id(locus_id:int) -> Locus:
     try:
-        return Locus(locus_id=53, user=User(35, "seityo", None), geos=[Geo(15.622, 137.610)])
         return db.find_locus(locus_id)
     except Exception as e:
         logger.error(f"<>...")
         raise e
 
-def get_locus_killed_me(user_id:int) -> Locus:
+def get_locus_by_victim(user_id:int) -> Optional[Locus]:
     try:
-        return Locus(locus_id=53, user=User(35, "seityo", None), geos=[Geo(15.622, 137.610)])
-        return db.find_locus_by_killed_user(user_id)
+        return db.find_locus_by_victim(user_id)
     except Exception as e:
         logger.error(f"<>...")
         raise e
