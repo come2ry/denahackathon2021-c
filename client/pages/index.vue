@@ -73,6 +73,9 @@
 <script>
 import { LocationView } from '@/components/LocationView.vue'
 export default {
+  components: {
+    LocationView
+  },
   setup() {},
   data() {
     return {
