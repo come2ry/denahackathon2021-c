@@ -27,7 +27,7 @@ services:
         source: ./server
         target: /server
     working_dir: /server
-    command: python main.py
+    command: python main.py runserver
     environment:
       FLASK_ENV: development
       FLASK_APP: app
@@ -51,22 +51,14 @@ services:
       MYSQL_DATABASE: test
       # MYSQL_USER: test
       MYSQL_PASSWORD: root
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root_password
       TZ: "Asia/Tokyo"
-    volumes:
-      # - ./db:/docker-entrypoint-initdb.d
-      # - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
-    ports:
-      - "13036:3036"
-    # restart: always
     command: --default-authentication-plugin=mysql_native_password
     volumes:
       - ./db/data:/var/lib/mysql
     ports:
-        - "13306:3306"
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root_password
+      - "13306:3306"
+    # restart: always
 
   swagger-ui:
     image: swaggerapi/swagger-ui:latest
