@@ -7,10 +7,11 @@ COPY . .
 
 FROM node:lts-alpine AS builder
 
-# Create app directory
 WORKDIR /client
 ADD . /client/
 
+ARG NUXT_APP_BACK_HOST
+ENV NUXT_APP_BACK_HOST ${NUXT_APP_BACK_HOST}
 RUN rm yarn.lock
 RUN yarn
 RUN yarn build
