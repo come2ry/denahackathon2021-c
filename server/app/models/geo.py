@@ -8,8 +8,7 @@ class Geo(Base):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(
         db.Integer, db.ForeignKey('User.id'), nullable=False, index=True)
-    latlng = db.Column(Geometry(geometry_type='POINT',
-                                dimension=2, srid=4326), nullable=False)
+    latlng = db.Column(Geometry(), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime_jstnow,
                            index=True, nullable=False)
     __table_args__ = (

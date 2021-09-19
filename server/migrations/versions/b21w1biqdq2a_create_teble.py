@@ -5,11 +5,8 @@ Revises:
 Create Date: 2021-09-19 03:58:50.478565
 
 """
-from alembic import op
 import sqlalchemy as sa
-from sqlalchemy.dialects import mysql
-import geoalchemy2 as ga
-
+from alembic import op
 from sqlalchemy import func
 from sqlalchemy.types import UserDefinedType
 
@@ -39,8 +36,7 @@ def upgrade():
                               autoincrement=True, nullable=False),
                     sa.Column('username', sa.String(
                         length=50), nullable=False),
-                    sa.Column('latlng', Geometry(geometry_type='POINT',
-                                                 dimension=2, srid=4326), nullable=False),
+                    sa.Column('latlng', Geometry(), nullable=False),
                     sa.Column('created_at', sa.DateTime(), nullable=False),
                     sa.Column('updated_at', sa.DateTime(), nullable=False),
                     sa.PrimaryKeyConstraint('id'),
@@ -50,8 +46,7 @@ def upgrade():
                     sa.Column('id', sa.Integer(),
                               autoincrement=True, nullable=False),
                     sa.Column('user_id', sa.Integer(), nullable=False),
-                    sa.Column('latlng', ga.Geometry(geometry_type='POINT',
-                                                    dimension=2, srid=4326), nullable=False),
+                    sa.Column('latlng', Geometry(), nullable=False),
                     sa.Column('created_at', sa.DateTime(), nullable=False),
                     sa.Column('updated_at', sa.DateTime(), nullable=False),
                     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
