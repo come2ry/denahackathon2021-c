@@ -1,4 +1,5 @@
 import os
+# import codec
 
 
 class BaseConfig(object):
@@ -11,21 +12,22 @@ class BaseConfig(object):
 class DevelopmentConfig(BaseConfig):
     SECRET_KEY = 'your secret key'
     DEBUG = True
-    # SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://{user}:{password}@{host}/{name}'.format(**{
-    #     'user': 'test',
-    #     'password': 'test',
-    #     'host': 'db',
-    #     'name': 'db.postgresql'
-    # })
-    # SQLALCHEMY_DATABASE_URI="mysql+pymysql://root:root@/prod_jobpacker?unix_socket=/Applications/MAMP/tmp/mysql/mysql.sock&charset=utf8"
     # env = os.environ.get('FLASK_ENV', 'development')  # default値は`development`
-    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://{user}:{password}=@{host}:{port}/{name}?charset=utf8mb4".format(**{
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://{user}:{password}@{host}:{port}/{name}?charset=utf8mb4".format(**{
         'user': 'root',
         'password': 'root_password',
-        'port': 13306,
-        'host': '127.0.0.1',
+        'port': 3306,
+        'host': 'db',
         'name': 'test'
     })
+
+    SQLALCHEMY_ECHO = True
+    # SQLALCHEMY_ENGINE_OPTIONS = {
+    #     "ssl_disabled": True
+    # }
+
+    print(
+        f"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!{SQLALCHEMY_DATABASE_URI}")
 
 
 class ProductionConfig(BaseConfig):
