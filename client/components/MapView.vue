@@ -23,9 +23,7 @@
       <l-circle-marker
         v-for="user of otherUsers"
         :key="user.id"
-        :data="{
-          color: 'red'
-        }"
+        color="red"
         :name="user.username"
         :lat-lng="[user.lat, user.lng]"
       >
