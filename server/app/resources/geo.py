@@ -36,9 +36,12 @@ class GeoQuery(Resource):
         latitude = request_json_data["latitude"]
         longitude = request_json_data["longitude"]
         new_geo = models.Geo(
-            user_id=user.id,
-            latlng=f"POINT ({latitude} {longitude})"
+            latlng=f"POINT ({latitude} {longitude})",
         )
+        user = session.query(models.User).filter(
+            models.User.id == user_id).one_or_none()
+        new_geo.user = user
+
         session.add(new_geo)
         session.commit()
         # utils.put_user_geo(request_json_data['user_id'], models.Geo(
