@@ -8,5 +8,5 @@ class User(Base):
     latlng = db.Column(db.Geometry(geometry_type='POINT',
                                    dimension=2, srid=4326), nullable=True)
     updated_at = db.Column(db.DateTime, default=datetime_jstnow,
-                           index=True, nullable=False)
+                           nullable=False)
     # google_id = Column(String(50), nullable=False)
