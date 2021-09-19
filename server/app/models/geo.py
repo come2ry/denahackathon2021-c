@@ -1,5 +1,5 @@
-from app.models import db, Base, datetime_jstnow
-from geoalchemy2 import Geometry  # type: ignore
+from app.models import db, Base, datetime_jstnow, Geometry
+# from geoalchemy2 import Geometry  # type: ignore
 from sqlalchemy.orm import backref, relationship
 
 

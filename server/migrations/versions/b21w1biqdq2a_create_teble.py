@@ -10,6 +10,20 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import mysql
 import geoalchemy2 as ga
 
+from sqlalchemy import func
+from sqlalchemy.types import UserDefinedType
+
+
+class Geometry(UserDefinedType):
+    def get_col_spec(self):
+        return 'GEOMETRY'
+
+    def bind_expression(self, bindvalue):
+        return func.ST_GeomFromText(bindvalue, type_=self)
+
+    def column_expression(self, col):
+        return func.ST_AsText(col, type_=self)
+
 
 # revision identifiers, used by Alembic.
 revision = 'b21w1biqdq2a'
@@ -25,11 +39,10 @@ def upgrade():
                               autoincrement=True, nullable=False),
                     sa.Column('username', sa.String(
                         length=50), nullable=False),
-                    sa.Column('latlng', ga.Geometry(geometry_type='POINT',
-                                                    dimension=2, srid=4326), nullable=False),
+                    sa.Column('latlng', Geometry(geometry_type='POINT',
+                                                 dimension=2, srid=4326), nullable=False),
                     sa.Column('created_at', sa.DateTime(), nullable=False),
                     sa.Column('updated_at', sa.DateTime(), nullable=False),
-                    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
                     sa.PrimaryKeyConstraint('id'),
                     )
 

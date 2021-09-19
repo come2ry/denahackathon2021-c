@@ -21,9 +21,16 @@ class DevelopmentConfig(BaseConfig):
             'name': 'test'
         })
 
-    SQLALCHEMY_ECHO = True
+    # SQLALCHEMY_ECHO = True
+    # SQLALCHEMY_ENGINE_OPTIONS = {
+    # }
     SQLALCHEMY_ENGINE_OPTIONS = {
-        # "ssl_disabled": True
+        'encoding': "utf-8",
+        'pool_size': 10,
+        'max_overflow': 2,
+        'pool_recycle': 600,
+        'pool_pre_ping': True,
+        'echo': False,
     }
 
     print(
