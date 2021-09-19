@@ -1,6 +1,6 @@
 from app.common.geo import Geo
 from typing import Optional
-from app import models
+from app.models.user import User as mUser
 
 class User:
     def __init__(self, *, id:int, username:Optional[str]=None, geo:Optional[Geo]=None):
@@ -17,6 +17,6 @@ class User:
         }
 
     @staticmethod
-    def from_model(muser: models.User):
+    def from_model(muser: mUser):
         geo = Geo(latitude=muser.latlng['lat'], longitude=muser.latlng['lng'])
         return User(id=muser.id, username=muser.username, geo=geo)

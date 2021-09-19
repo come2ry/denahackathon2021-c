@@ -2,7 +2,7 @@ from app.common.geo import Geo
 from app.common.user import User
 from typing import Optional
 from sympy.geometry import Point, Triangle, Polygon
-from app import models
+from app.models.locus import Locus as mLocus
 
 class Locus:
     def __init__(self, *, geos:list[Geo], locus_id:Optional[int]=None, user:Optional[User]=None):
@@ -33,6 +33,6 @@ class Locus:
         return left_top_geo, right_bottom_geo
 
     @staticmethod
-    def from_model(mlocus:models.Locus):
-        user = User(user_id=mlocus.user_id)
+    def from_model(mlocus:mLocus):
+        user = User(id=mlocus.user_id)
         return Locus(geos=mlocus.geos, locus_id=mlocus.id, user=user) # TODO: mlocus.geosを変換する必要あり
