@@ -1,4 +1,3 @@
-import os
 # import codec
 
 
@@ -13,17 +12,25 @@ class DevelopmentConfig(BaseConfig):
     SECRET_KEY = 'your secret key'
     DEBUG = True
     # env = os.environ.get('FLASK_ENV', 'development')  # default値は`development`
-    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://{user}:{password}@{host}:{port}/{name}?charset=utf8mb4".format(**{
-        'user': 'root',
-        'password': 'root_password',
-        'port': 3306,
-        'host': 'db',
-        'name': 'test'
-    })
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://{user}:{password}@{host}:{port}/{name}?charset=utf8mb4".format(
+        **{
+            'user': 'root',
+            'password': 'root_password',
+            'port': 3306,
+            'host': 'db',
+            'name': 'test'
+        })
 
-    SQLALCHEMY_ECHO = True
+    # SQLALCHEMY_ECHO = True
+    # SQLALCHEMY_ENGINE_OPTIONS = {
+    # }
     SQLALCHEMY_ENGINE_OPTIONS = {
-        "ssl_disabled": True
+        'encoding': "utf-8",
+        'pool_size': 10,
+        'max_overflow': 2,
+        'pool_recycle': 600,
+        'pool_pre_ping': True,
+        'echo': False,
     }
 
     print(

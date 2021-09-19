@@ -27,7 +27,7 @@ services:
         source: ./server
         target: /server
     working_dir: /server
-    command: python main.py runserver
+    # command: python main.py runserver
     environment:
       FLASK_ENV: development
       FLASK_APP: main
@@ -41,7 +41,6 @@ services:
       - "8081:8080"
     depends_on:
       - db
-    restart: always
 
   db:
     build:
@@ -58,7 +57,6 @@ services:
       - ./db/data:/var/lib/mysql
     ports:
       - "13306:3306"
-    # restart: always
 
   swagger-ui:
     image: swaggerapi/swagger-ui:latest
