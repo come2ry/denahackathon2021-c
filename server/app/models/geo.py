@@ -13,7 +13,8 @@ class Geo(Base):
     created_at = db.Column(db.DateTime, default=datetime_jstnow,
                            index=True, nullable=False)
     __table_args__ = (
-        db.Index('latest_user_geo_idx', created_at.desc(), user_id, latlng),
+        db.Index('user_geo_idx', created_at.desc(), user_id),
+        # db.Index('latest_user_geo_idx', created_at.desc(), user_id, latlng),
     )
 
     user = relationship(
