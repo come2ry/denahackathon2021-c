@@ -1,6 +1,14 @@
-from app.models import Base, datetime_jstnow
+# from app.models import Base, datetime_jstnow
 from database import db, Base
 from sqlalchemy.orm import backref, relationship
+from datetime import datetime, timedelta, timezone
+
+JST = timezone(timedelta(hours=+9), 'JST')
+
+
+def datetime_jstnow(time_zone=JST):
+    return datetime.now(JST)
+
 
 __all__ = ["Locus", "LocusNotify"]
 

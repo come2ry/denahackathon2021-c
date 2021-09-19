@@ -9,7 +9,7 @@ import json
 # from app.common.geo import Geo
 # from app.common.locus import Locus
 # from app.common.user import User
-from database import SessionLocal as session
+from database import session
 from app import models
 
 api_bp = Blueprint("geo", __name__)
@@ -30,13 +30,14 @@ class GeoQuery(Resource):
             # abort(500, message="入力パラメータの解析失敗")
             raise e  # DEBUG: デバッグ用
 
-        user_id = request_json_data['user_id']
-        latitude = request_json_data['latitude']
-        longitude = request_json_data['longitude']
-
+        user_id = request_json_data["user_id"]
+        user = session.query(models.User).filter(
+            models.User.id == user_id).one_or_none()
+        latitude = request_json_data["latitude"]
+        longitude = request_json_data["longitude"]
         new_geo = models.Geo(
-            user_id=user_id,
-            latlng=f"POINT ({latitude} {longitude})",
+            user_id=user.id,
+            latlng=f"POINT ({latitude} {longitude})"
         )
         session.add(new_geo)
         session.commit()

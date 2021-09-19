@@ -4,7 +4,7 @@ from typing import Optional
 from app.common.geo import Geo as cGeo
 from app.common.user import User as cUser
 from app.common.locus import Locus as cLocus
-from database import SessionLocal as session
+from database import session
 
 # from sqlalchemy.orm import sessionmaker
 # SessionClass = sessionmaker(engine)  # セッションを作るクラスを作成

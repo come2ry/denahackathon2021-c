@@ -1,6 +1,14 @@
-from app.models import Base, datetime_jstnow
-from database import db
+# from app.models import datetime_jstnow
+from database import db, Base
 from app.models.columntypes import Geometry
+from datetime import datetime, timedelta, timezone
+
+JST = timezone(timedelta(hours=+9), 'JST')
+
+
+def datetime_jstnow(time_zone=JST):
+    return datetime.now(JST)
+
 
 __all__ = ["User"]
 

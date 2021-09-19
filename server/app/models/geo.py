@@ -1,8 +1,16 @@
-from app.models import Base, datetime_jstnow
+# from app.models import datetime_jstnow
 from database import db, Base
 # from geoalchemy2 import Geometry  # type: ignore
 from sqlalchemy.orm import backref, relationship
 from app.models.columntypes import Geometry
+from datetime import datetime, timedelta, timezone
+
+JST = timezone(timedelta(hours=+9), 'JST')
+
+
+def datetime_jstnow(time_zone=JST):
+    return datetime.now(JST)
+
 
 __all__ = ["Geo"]
 
@@ -13,7 +21,7 @@ class Geo(Base):
     user_id = db.Column(
         db.Integer, db.ForeignKey('User.id'), nullable=False, index=True)
     latlng = db.Column(Geometry(2, 4326), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime_jstnow,
+    created_at = db.Column(db.DateTime, default=datetime_jstnow(),
                            index=True, nullable=False)
     __table_args__ = (
         db.Index('user_geo_idx', created_at.desc(), user_id),

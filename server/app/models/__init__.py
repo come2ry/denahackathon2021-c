@@ -10,7 +10,12 @@ from .locus import *
 from .user import *
 
 # タイムゾーンの生成
-JST = timezone(timedelta(hours=+9), 'JST')
+# from datetime import datetime, timedelta, timezone
+# JST = timezone(timedelta(hours=+9), 'JST')
+#
+#
+# def datetime_jstnow(time_zone=JST):
+#     return datetime.now(JST)
 
 
 # 引数は使っていないが，消してはいけない
@@ -27,8 +32,8 @@ JST = timezone(timedelta(hours=+9), 'JST')
 #         return func.ST_AsText(col, type_=self)
 
 
-def datetime_jstnow(time_zone=JST):
-    return datetime.now(JST)
+# def datetime_jstnow(time_zone=JST):
+#     return datetime.now(JST)
 
 
 # engine = create_engine(
