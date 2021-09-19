@@ -20,7 +20,6 @@ class Locus:
         }
 
     def is_in(self, geo:Geo) -> bool:
-        return True
         poly = Polygon(*[(geo.latitude, geo.longitude) for geo in self.geos])
         if not (isinstance(poly, Triangle) or isinstance(poly, Polygon)): return False
         return poly.encloses_point(Point(geo['latitude'],geo['longitude']))
