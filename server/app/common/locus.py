@@ -15,11 +15,12 @@ class Locus:
             'locus_id': self.locus_id,
             'geos': [geo.dump() for geo in self.geos],
             'user_id': self.user.id,
-            'user_name': self.user.username,
+            'username': self.user.username,
             'datetime': self.datetime
         }
 
     def is_in(self, geo:Geo) -> bool:
+        return True
         poly = Polygon(*[(geo.latitude, geo.longitude) for geo in self.geos])
         if not (isinstance(poly, Triangle) or isinstance(poly, Polygon)): return False
         return poly.encloses_point(Point(geo['latitude'],geo['longitude']))
