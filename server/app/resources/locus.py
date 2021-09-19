@@ -38,13 +38,13 @@ class LocusQuery(Resource):
 
         user_id = request_json_data['user_id']
         geos:list[Geo] = [Geo(geo['latitude'], geo['longitude']) for geo in request_json_data['locus']]
-        locus = Locus(None, geos)
+        locus = Locus(geos=geos)
         locus_id = utils.put_user_locus(user_id, locus)
         locus.locus_id = locus_id
         left_top_geo, right_bottom_geo = locus.get_rectangle()
         users:list[User] = utils.get_near_users(left_top_geo, right_bottom_geo)
-        users = list(filter(lambda user: locus.is_in(Geo.from_latlng(user.latlng)), users))
-        result: dict = {users: users}
+        users = list(map(lambda user: user.dump(), (filter(lambda user: locus.is_in(user.geo), users))))
+        result: dict = {"users": users}
         response: Response = jsonify(result)
         response.status_code = 200
         return response
@@ -64,9 +64,9 @@ class LocusQuery(Resource):
             }
         """
         locus:Locus = utils.get_locus_by_id(locus_id)
-        result: dict = {locus: locus.dump()}
+        result: dict = {"locus": locus.dump()}
         response: Response = jsonify(result)
         response.status_code = 200
         return response
 
-api.add_resource(LocusQuery, "/locus/", "/locus/<int:locus_id>")
+api.add_resource(LocusQuery, "/locus", "/locus/<int:locus_id>")

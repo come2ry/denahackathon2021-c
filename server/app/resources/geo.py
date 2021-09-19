@@ -18,7 +18,7 @@ class GeoQuery(Resource):
         """
             ユーザーが位置情報を定期アップロードする
             body : { geo: { user_id[int]  latitude[float], longitude[float] } }
-            response: [{ locus_id[int], user_id(囲った人), username[str], datetime }]
+            response: { locus_id[int], user_id(囲った人), username[str], datetime }
         """
         try:
             request_json_data: Any | None = request.get_json(force=True)
@@ -28,9 +28,9 @@ class GeoQuery(Resource):
             raise e  # DEBUG: デバッグ用
 
         utils.put_user_geo(request_json_data['user_id'], Geo(request_json_data['latitude'], request_json_data['longitude']))
-        locuses: list[Locus] = utils.get_locus_killed_me(request_json_data['user_id'])
+        locus: Locus = utils.get_locus_killed_me(request_json_data['user_id'])
 
-        result: list[dict] = [{k:v for k,v in locus.dump().items() if k!="geos"} for locus in locuses]
+        result: dict = {k:v for k,v in locus.dump().items() if k!="geos"}
         response: Response = jsonify(result)
         response.status_code = 200
         return response
@@ -76,9 +76,9 @@ class GeoQuery(Resource):
             raise e  # DEBUG: デバッグ用
 
         users: list[User] = utils.get_user_geos(Geo(args.top, args.left), Geo(args.bottom, args.right))
-        result: dict = {users: [user.dump() for user in users]}
+        result: dict = {"users": [user.dump() for user in users]}
         response: Response = jsonify(result)
         response.status_code = 200
         return response
 
-api.add_resource(GeoQuery, "/geo/")
+api.add_resource(GeoQuery, "/geo")

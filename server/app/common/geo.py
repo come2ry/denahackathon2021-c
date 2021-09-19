@@ -3,6 +3,8 @@ class Geo:
         self.latitude = latitude
         self.longitude = longitude
 
-    @staticmethod
-    def from_latlng(latlng):
-        return Geo(latlng["lat"], latlng["lng"])
+    def dump(self):
+        return {
+            'latitude': self.latitude,
+            'longitude': self.longitude
+        }

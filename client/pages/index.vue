@@ -2,8 +2,7 @@
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
       <v-card class="logo py-4 d-flex justify-center">
-        <NuxtLogo />
-        <VuetifyLogo />
+        <LocationView />
       </v-card>
       <v-card>
         <v-card-title class="headline">
@@ -14,7 +13,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" nuxt to="/inspire"> Continue </v-btn>
+          <v-btn color="primary" nuxt to="/map"> Continue </v-btn>
         </v-card-actions>
       </v-card>
       <table>
@@ -27,7 +26,11 @@
         <tr>
           <td>
             <v-avater size="18px">
-              <img width="50%" alt="Avatar" src="@/assets/ranking/1.jpg" />
+              <img
+                width="50%"
+                alt="Avatar"
+                src="@/assets/ranking/1_w_trans.png"
+              />
             </v-avater>
           </td>
           <td class="icon">鳥</td>
@@ -37,7 +40,11 @@
         <tr>
           <td>
             <v-avater size="18px">
-              <img width="50%" alt="Avatar" src="@/assets/ranking/2.jpg" />
+              <img
+                width="50%"
+                alt="Avatar"
+                src="@/assets/ranking/2_w_trans.png"
+              />
             </v-avater>
           </td>
           <td class="icon">クジラ</td>
@@ -47,7 +54,11 @@
         <tr>
           <td>
             <v-avater size="18px">
-              <img width="50%" alt="Avatar" src="@/assets/ranking/3.jpg" />
+              <img
+                width="50%"
+                alt="Avatar"
+                src="@/assets/ranking/3_w_trans.png"
+              />
             </v-avater>
           </td>
           <td class="icon">カニ</td>
@@ -71,7 +82,6 @@ export default {
     }
   },
   mounted() {
-    console.log('here')
     // GPS センサの値が変化したら何らか実行する geolocation.watchPosition メソッド
     navigator.geolocation.watchPosition(
       (position) => {

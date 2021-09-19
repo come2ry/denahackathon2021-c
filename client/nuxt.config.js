@@ -30,8 +30,23 @@ export default {
     // https://go.nuxtjs.dev/stylelint
     '@nuxtjs/stylelint-module',
     // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    [
+      '@nuxt/typescript-build',
+      {
+        typeCheck: true,
+        ignoreNotFoundWarnings: true
+      }
+    ]
   ],
+  loaders: {
+    ts: {
+      silent: true
+    },
+    tsx: {
+      silent: true
+    }
+  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
@@ -43,7 +58,14 @@ export default {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: { proxy: true },
+
+  proxy: {
+    '/api/': {
+      target: 'http://localhost:8080',
+      pathRewrite: { '^/api/v1': '' }
+    }
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
