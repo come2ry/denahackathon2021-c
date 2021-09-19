@@ -1,17 +1,17 @@
 export const state = () => ({
-  locus: [],
+  users: [],
 })
 
 export const mutations = {
   add(state, data) {
-    state.locus = data
+    state.users = data
   },
 }
 
 export const actions = {
   async fetch({ commit, state }) {
-    if (!state.locus.length) {
-      const res = await this.$axios.$get('/locus/1')
+    if (!state.users.length) {
+      const res = await this.$axios.$get('/geo')
       commit('add', res.data)
     }
   },
