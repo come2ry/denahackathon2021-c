@@ -5,7 +5,7 @@ export function updateLog(logs: DLL[]): DLL[] {
   return logs.filter((e) => e.date.isAfter(dayjs().subtract(15, 'minutes')))
 }
 
-export function findLoci(logs: LL[]): LL[][] {
+export function findLoci(logs: LL[]): [LL[][], LL[]] {
   let _logs = [...logs]
   const loops = []
   while (true) {
@@ -18,7 +18,7 @@ export function findLoci(logs: LL[]): LL[][] {
       break
     }
   }
-  return loops
+  return [loops, _logs]
 }
 
 function _findLocus(logs: LL[]): [LL[], LL[]] | null {

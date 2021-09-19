@@ -73,13 +73,16 @@
 <script>
 import { LocationView } from '@/components/LocationView.vue'
 export default {
+  components: {
+    LocationView
+  },
   setup() {},
   data() {
     return {
       lat: null,
       lng: null,
       accu: null,
-      logs: [],
+      logs: []
     }
   },
   mounted() {
@@ -98,10 +101,10 @@ export default {
         // エラー処理（今回は特に何もしない）
       },
       {
-        enableHighAccuracy: true, // 高精度で測定するオプション
+        enableHighAccuracy: true // 高精度で測定するオプション
       }
     )
-  },
+  }
 }
 </script>
 

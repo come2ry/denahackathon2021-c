@@ -1,4 +1,4 @@
-import { LL } from './baseType'
+import { LL, ULL } from './baseType'
 
 function random(): number {
   return Math.random() - 0.5
@@ -14,4 +14,13 @@ export function genRandomPath(home: LL, length: number): LL[] {
     })
   }
   return path
+}
+
+export function randomScatter(home: LL, length: number): ULL[] {
+  return [...Array(length).keys()].map((i) => ({
+    id: i + 100,
+    username: Math.random().toString(32).substring(3),
+    lat: home.lat + random() * 0.005,
+    lng: home.lng + random() * 0.005
+  }))
 }
