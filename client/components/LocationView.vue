@@ -12,7 +12,7 @@ export default {
       geo: null,
       locus: null,
       loading: true,
-      errored: false
+      errored: false,
     }
   },
   mounted() {
@@ -32,6 +32,6 @@ export default {
         console.log(error)
         this.errored = true
       })
-  }
+  },
 }
 </script>
