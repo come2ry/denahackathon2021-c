@@ -1,6 +1,6 @@
 import os
 from datetime import datetime, timedelta, timezone
-
+from database import Base as ModelBase
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base  # type: ignore
@@ -24,7 +24,7 @@ db = SQLAlchemy()
 
 # SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-ModelBase = declarative_base()
+# ModelBase = declarative_base()
 
 
 class Base(ModelBase):

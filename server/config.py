@@ -22,9 +22,9 @@ class DevelopmentConfig(BaseConfig):
     })
 
     SQLALCHEMY_ECHO = True
-    # SQLALCHEMY_ENGINE_OPTIONS = {
-    #     "ssl_disabled": True
-    # }
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        "ssl_disabled": True
+    }
 
     print(
         f"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!{SQLALCHEMY_DATABASE_URI}")
