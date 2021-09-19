@@ -4,7 +4,7 @@
 import re
 
 from sqlalchemy.sql import expression
-from fire.api.model import columntypes
+from app.models import columntypes
 
 __all__ = ["Geometry", "Point", "Bbox"]
 
@@ -20,6 +20,7 @@ class Geometry(expression.Function):
             self._geom = geometry
             self._wkt = None
         else:
+            print(type(geometry), geometry)
             raise TypeError(
                 "Skal være enten en koordinat, en WKT streng eller en GeoJSON-agtig dictionary"
             )

@@ -10,7 +10,7 @@ import json
 # from app.common.locus import Locus
 # from app.common.user import User
 from database import SessionLocal as session
-import models
+from app import models
 
 api_bp = Blueprint("geo", __name__)
 api = Api(api_bp)

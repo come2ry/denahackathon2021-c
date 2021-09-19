@@ -6,9 +6,14 @@ from database import Base as ModelBase
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base  # type: ignore
+from .geometry import *
+from .geo import *
+from .locus import *
+from .user import *
 
 # タイムゾーンの生成
 JST = timezone(timedelta(hours=+9), 'JST')
+
 
 # 引数は使っていないが，消してはいけない
 
@@ -16,10 +21,10 @@ JST = timezone(timedelta(hours=+9), 'JST')
 # class Geometry(UserDefinedType):
 #     def get_col_spec(self):
 #         return 'GEOMETRY'
-
+#
 #     def bind_expression(self, bindvalue):
 #         return func.ST_GeomFromText(bindvalue, type_=self)
-
+#
 #     def column_expression(self, col):
 #         return func.ST_AsText(col, type_=self)
 

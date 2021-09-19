@@ -1,7 +1,9 @@
-from app.models import db, Base, datetime_jstnow, Geometry
+from app.models import db, Base, datetime_jstnow
 # from geoalchemy2 import Geometry  # type: ignore
 from sqlalchemy.orm import backref, relationship
+from app.models.columntypes import Geometry
 
+__all__ = ["Geo"]
 
 class Geo(Base):
     __tablename__ = 'geo'

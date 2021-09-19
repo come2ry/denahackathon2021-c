@@ -1,6 +1,6 @@
 from sqlalchemy.types import UserDefinedType, TypeDecorator, Integer
 from sqlalchemy import func
-from model import geometry
+from app.models import geometry
 
 # Based on https://github.com/zzzeek/sqlalchemy/blob/master/examples/postgis/postgis.py
 

@@ -1,6 +1,8 @@
 from app.models import db, Base, datetime_jstnow
 from sqlalchemy.orm import backref, relationship
 
+__all__ = ["Locus", "LocusNotify"]
+
 locus_geos_table = db.Table('locus_geos', Base.metadata,
                             db.Column('locus_id', db.Integer,
                                       db.ForeignKey('locus.id')),
