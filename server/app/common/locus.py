@@ -15,7 +15,7 @@ class Locus:
             'locus_id': self.locus_id,
             'geos': [geo.dump() for geo in self.geos],
             'user_id': self.user.id,
-            'user_name': self.user.username,
+            'username': self.user.username,
             'datetime': self.datetime
         }
 

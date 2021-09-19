@@ -60,11 +60,12 @@ class LocusQuery(Resource):
                     …
                 ],
                 user_id[int], 
-                user_name[str] 
+                username[str] 
             }
         """
         locus:Locus = utils.get_locus_by_id(locus_id)
-        result: dict = {"locus": locus.dump()}
+        ldump:dict = locus.dump()
+        result: dict = {"locus": ldump["geos"], "user_id": ldump["user_id"], "username": ldump["username"]}
         response: Response = jsonify(result)
         response.status_code = 200
         return response
