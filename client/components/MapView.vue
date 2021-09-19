@@ -52,10 +52,10 @@ export default Vue.extend({
     const lng = 139.702232
     const otherUsers = randomScatter({ lat, lng }, 30)
     return {
-      mapLat: 35.658319,
-      mapLng: 139.702232,
-      lat: 35.658319,
-      lng: 139.702232,
+      mapLat: lat,
+      mapLng: lng,
+      lat,
+      lng,
       logs: [] as LL[],
       loci: [] as LL[][],
       demo: true,
