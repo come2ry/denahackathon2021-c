@@ -1,3 +1,7 @@
+<template>
+  <div><ApiClientBase />{{ isViewMode }}</div>
+</template>
+
 <script>
 import ApiClientBase from '@/store/api-client-base.js'
 export default {
@@ -6,7 +10,7 @@ export default {
   computed: {
     isViewMode() {
       return this.$store.locus
-    },
-  },
+    }
+  }
 }
 </script>
