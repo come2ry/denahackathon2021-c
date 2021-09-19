@@ -1,6 +1,18 @@
 <template>
-  <div style="height: 100vh; z-index: -1">
+  <div style="height: 90vh; z-index: -1">
     <l-map ref="myMap" :zoom="17" :center="[mapLat, mapLng]">
+      <div class="text-center">
+        <v-btn
+          rounded
+          color="primary"
+          elevation="50"
+          light
+          x-large
+          @click="buttonClick"
+        >
+          Let's Siege!
+        </v-btn>
+      </div>
       <l-tile-layer
         url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
       ></l-tile-layer>
@@ -40,10 +52,10 @@ export default Vue.extend({
     const lng = 139.702232
     const otherUsers = randomScatter({ lat, lng }, 30)
     return {
-      mapLat: lat,
-      mapLng: lng,
-      lat,
-      lng,
+      mapLat: 35.658319,
+      mapLng: 139.702232,
+      lat: 35.658319,
+      lng: 139.702232,
       logs: [] as LL[],
       loci: [] as LL[][],
       demo: true,
@@ -52,7 +64,8 @@ export default Vue.extend({
       randomPath: [] as LL[],
       otherUsers,
       id: 1,
-      myUser: null as ULL | null
+      myUser: null as ULL | null,
+      msg: ''
     }
   },
   watch: {
@@ -166,6 +179,9 @@ export default Vue.extend({
     )
   },
   methods: {
+    buttonClick() {
+      this.msg = ''
+    },
     async fetchUsers() {
       const len = 0.05
       const top = this.mapLat + len
@@ -197,3 +213,13 @@ export default Vue.extend({
   }
 })
 </script>
+<style lang="scss" scoped>
+button {
+  z-index: 1400 !important;
+  position: absolute;
+  bottom: 1%;
+  left: 50%;
+  margin: 0;
+  padding: 0;
+}
+</style>
