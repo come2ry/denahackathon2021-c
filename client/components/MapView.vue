@@ -7,21 +7,21 @@
       <l-marker ref="myMarker" name="あなた" :lat-lng="[lat, lng]">
         <l-tooltip content="あなた"></l-tooltip>
       </l-marker>
-      <!-- <l-marker
+      <l-marker
         v-for="user of otherUsers"
-        :key="user.username"
-        name="あなた"
+        :key="user.id"
+        :name="user.username"
         :lat-lng="[user.lat, user.lng]"
       >
-        <l-tooltip content="あなた"></l-tooltip>
-      </l-marker> -->
+        <l-tooltip :content="user.username"></l-tooltip>
+      </l-marker>
     </l-map>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import { LL } from '@/utils/baseType'
+import { LL, ULL } from '@/utils/baseType'
 import { genRandomPath, randomScatter } from '~/utils/genRandomPath'
 import { findLoci } from '~/utils/log'
 
@@ -50,7 +50,9 @@ export default Vue.extend({
       k: 0,
       isFirst: true,
       randomPath: [] as LL[],
-      otherUsers
+      otherUsers,
+      id: 1,
+      myUser: null as ULL | null
     }
   },
   watch: {
@@ -149,6 +151,11 @@ export default Vue.extend({
           //   }
           // })
         }
+        if (!this.demo) {
+          this.fetchUsers()
+        } else {
+          this.otherUsers = randomScatter({ lat, lng }, 30)
+        }
       },
       (error) => {
         console.log(error)
@@ -157,6 +164,36 @@ export default Vue.extend({
         enableHighAccuracy: true // 高精度で測定するオプション
       }
     )
+  },
+  methods: {
+    async fetchUsers() {
+      const len = 0.05
+      const top = this.mapLat + len
+      const bottom = this.mapLat - len
+      const left = this.mapLng - len
+      const right = this.mapLng + len
+      const res = await this.$axios.$get(
+        `http://localhost:8081/api/v1/geo?top=${top}&bottom=${bottom}&left=${left}&right=${right}`
+      )
+      console.log(res)
+      this.otherUsers = res.users
+        ?.filter((u: any) => u.id !== this.id)
+        .map((u: any) => ({
+          lat: u.latitude,
+          lng: u.longitude,
+          ...u
+        }))
+      // console.log(this.otherUsers)
+      const resUser = (await this.$axios.$post(
+        'http://localhost:8081/api/v1/geo',
+        {
+          user_id: this.id,
+          latitude: this.lat,
+          longitude: this.lng
+        }
+      )) as any
+      console.log(resUser)
+    }
   }
 })
 </script>

@@ -10,5 +10,6 @@ export type DLL = LL & {
 }
 
 export type ULL = LL & {
+  id: number
   username: string
 }
