@@ -1,7 +1,7 @@
 <template>
   <div style="height: 100vh; z-index: -1">
     <l-map ref="myMap" :zoom="17" :center="[mapLat, mapLng]">
-      <div class="text-center" style="z-index: 2000">
+      <div class="text-center">
         <v-btn
           rounded
           color="primary"
@@ -16,8 +16,15 @@
       <l-tile-layer
         url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
       ></l-tile-layer>
-
       <l-marker ref="myMarker" name="あなた" :lat-lng="[lat, lng]">
+        <l-tooltip content="あなた"></l-tooltip>
+      </l-marker>
+      <l-marker
+        v-for="user of otherUsers"
+        :key="user.username"
+        name="あなた"
+        :lat-lng="[user.lat, user.lng]"
+      >
         <l-tooltip content="あなた"></l-tooltip>
       </l-marker>
     </l-map>
@@ -27,7 +34,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { LL } from '@/utils/baseType'
-import { genRandomPath } from '~/utils/genRandomPath'
+import { genRandomPath, randomScatter } from '~/utils/genRandomPath'
 import { findLoci } from '~/utils/log'
 
 export default Vue.extend({
@@ -41,20 +48,31 @@ export default Vue.extend({
     //   lat: e[0],
     //   lng: e[1]
     // }))
+    const lat = 35.658319
+    const lng = 139.702232
+    const otherUsers = randomScatter({ lat, lng }, 30)
     return {
       mapLat: 35.658319,
       mapLng: 139.702232,
       lat: 35.658319,
       lng: 139.702232,
       logs: [] as LL[],
+      loci: [] as LL[][],
       demo: true,
       k: 0,
-      msg: '',
+      isFirst: true,
+      randomPath: [] as LL[],
+      otherUsers,
     }
+  },
+  methods: {
+    ButtonnClick() {
+      this.msg = ''
+    },
   },
   watch: {
     logs(newLogs) {
-      if (newLogs == null) return
+      if (!newLogs) return
       this.$L
         .polyline(newLogs as LL[], {
           color: 'green',
@@ -65,12 +83,25 @@ export default Vue.extend({
         })
         .addTo((this.$refs.myMap as any).mapObject)
     },
+    loci(newLoci) {
+      if (!newLoci) return
+      for (const locus of newLoci) {
+        this.$L
+          .polyline(locus as LL[], {
+            color: 'blue',
+            weight: 4,
+            // fill: true,
+            // fillColor: 'green',
+            opacity: 0.5,
+          })
+          .addTo((this.$refs.myMap as any).mapObject)
+      }
+    },
   },
   mounted() {
     // const myMap = this.$L.map('mapid')
     // console.log(myMap)
-    const randomPath = genRandomPath({ lat: 35.658318, lng: 139.702231 }, 100)
-    console.log(findLoci(randomPath))
+    this.randomPath = genRandomPath({ lat: 35.658318, lng: 139.702231 }, 100)
 
     // this.$L
     //   .polyline(randomPath, {
@@ -81,21 +112,32 @@ export default Vue.extend({
     //     opacity: 0.5
     //   })
     //   .addTo((this.$refs.myMap as any).mapObject)
+    let timer: NodeJS.Timer | null = null
     if (this.demo) {
-      const timer = setInterval(() => {
-        if (this.k >= randomPath.length) {
+      timer = setInterval(() => {
+        if (this.k >= this.randomPath.length && timer != null) {
           clearInterval(timer)
+          return
         }
-        this.logs = randomPath.slice(0, this.k + 1)
+        this.logs.push(this.randomPath[this.k])
 
-        this.lng = randomPath[this.k].lng
-        this.lat = randomPath[this.k].lat
+        this.lng = this.randomPath[this.k].lng
+        this.lat = this.randomPath[this.k].lat
         this.k++
+        if (this.k % 10 === 0) {
+          const [loci, rest] = findLoci(this.logs)
+          this.loci = loci
+          this.logs = rest
+        }
       }, 200)
     }
     // GPS センサの値が変化したら何らか実行する geolocation.watchPosition メソッド
     navigator.geolocation.watchPosition(
       (position) => {
+        console.log('updated')
+        if (timer != null) {
+          clearInterval(timer)
+        }
         const lat = position.coords.latitude // 緯度を取得
         const lng = position.coords.longitude // 経度を取得
         // const accu = position.coords.accuracy // 緯度・経度の精度を取得
@@ -104,6 +146,26 @@ export default Vue.extend({
         this.mapLat = lat
         this.mapLng = lng
         this.logs.push({ lat, lng })
+        if (this.demo && this.isFirst) {
+          this.isFirst = false
+          this.randomPath = genRandomPath({ lat, lng }, 100)
+          // const realTimer = setInterval(() => {
+          //   if (this.k >= randomPath.length) {
+          //     clearInterval(realTimer)
+          //     return
+          //   }
+          //   this.logs.push(randomPath[this.k])
+
+          //   this.lng = randomPath[this.k].lng
+          //   this.lat = randomPath[this.k].lat
+          //   this.k++
+          //   if (this.k % 10 === 0) {
+          //     const [loci, rest] = findLoci(this.logs)
+          //     this.loci = loci
+          //     this.logs = rest
+          //   }
+          // })
+        }
       },
       (error) => {
         console.log(error)
@@ -113,19 +175,8 @@ export default Vue.extend({
       }
     )
   },
-  methods: {
-    openDefaultMarkers(mapObject: any, nextMarker: any) {
-      if (nextMarker.opened) {
-        mapObject.openPopup()
-      }
-    },
-    ButtonnClick() {
-      this.msg = ''
-    },
-  },
 })
 </script>
-
 <style lang="scss" scoped>
 button {
   z-index: 1400 !important;
