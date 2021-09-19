@@ -27,7 +27,7 @@ services:
         source: ./server
         target: /server
     working_dir: /server
-    # command: python main.py
+    command: python main.py
     environment:
       FLASK_ENV: development
       FLASK_APP: app
@@ -35,8 +35,8 @@ services:
       DB_HOST: db
       DB_PORT: 3306
       DB_NAME: test
-      DB_USER: test
-      DB_PASS: test
+      DB_USER: root
+      DB_PASS: root_password
     ports:
       - "8081:8080"
     depends_on:
@@ -44,19 +44,29 @@ services:
     restart: always
 
   db:
-    image: mysql:8.0
+    build:
+      context: .
+      dockerfile: db/Dockerfile
     environment:
       MYSQL_DATABASE: test
-      MYSQL_USER: test
-      MYSQL_PASSWORD: test
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      # MYSQL_USER: test
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
       TZ: "Asia/Tokyo"
     volumes:
-      # - ../mysql:/docker-entrypoint-initdb.d
-      - ../mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      # - ./db:/docker-entrypoint-initdb.d
+      # - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
     ports:
       - "13036:3036"
+    # restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./db/data:/var/lib/mysql
+    ports:
+        - "13306:3306"
     restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
 
   swagger-ui:
     image: swaggerapi/swagger-ui:latest
@@ -69,5 +79,6 @@ services:
       - 127.0.0.1:80:8080
 
 volumes:
+  db_data:
   npm-cache:
   nuxt-cache:

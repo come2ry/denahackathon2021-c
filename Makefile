@@ -3,9 +3,13 @@ build:
 
 upd:
 	docker-compose up -d
+upd-back:
+	docker-compose up db server swagger-ui
 
 up:
 	docker-compose up
+up-back:
+	docker-compose up db server swagger-ui
 
 down:
 	docker-compose down
