@@ -20,14 +20,17 @@
       <l-marker ref="myMarker" name="あなた" :lat-lng="[lat, lng]">
         <l-tooltip content="あなた"></l-tooltip>
       </l-marker>
-      <l-marker
+      <l-circle-marker
         v-for="user of otherUsers"
         :key="user.id"
+        :data="{
+          color: 'red'
+        }"
         :name="user.username"
         :lat-lng="[user.lat, user.lng]"
       >
         <l-tooltip :content="user.username"></l-tooltip>
-      </l-marker>
+      </l-circle-marker>
     </l-map>
     <v-switch v-model="demo" label="デモ"></v-switch>
   </div>
