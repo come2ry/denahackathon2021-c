@@ -67,7 +67,8 @@ export default Vue.extend({
       id: 1,
       myUser: null as ULL | null,
       demo: false,
-      surroundedUsers: null as Locus | null
+      surroundedUsers: [] as LL[],
+      surroundedLocus: null as Locus | null
     }
   },
   watch: {
@@ -158,9 +159,9 @@ export default Vue.extend({
       )) as any
       console.log(resUser)
       if (resUser.locus_id != null) {
-        const resLocus = await this.$axios.get(
+        const resLocus = (await this.$axios.get(
           `http://localhost:8081/api/v1/locus/${resUser.locus_id}`
-        )
+        )) as any
         console.log(resLocus)
         this.surroundedLocus = new Locus(resLocus)
       }
