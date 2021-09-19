@@ -1,6 +1,18 @@
 <template>
   <div style="height: 100vh; z-index: -1">
     <l-map ref="myMap" :zoom="17" :center="[mapLat, mapLng]">
+      <div class="text-center">
+        <v-btn
+          rounded
+          color="primary"
+          elevation="50"
+          light
+          x-large
+          v-on:click="ButtonnClick"
+        >
+          Let's Siege!
+        </v-btn>
+      </div>
       <l-tile-layer
         url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
       ></l-tile-layer>
@@ -50,8 +62,13 @@ export default Vue.extend({
       k: 0,
       isFirst: true,
       randomPath: [] as LL[],
-      otherUsers
+      otherUsers,
     }
+  },
+  methods: {
+    ButtonnClick() {
+      this.msg = ''
+    },
   },
   watch: {
     logs(newLogs) {
@@ -62,7 +79,7 @@ export default Vue.extend({
           weight: 2,
           // fill: true,
           // fillColor: 'green',
-          opacity: 0.5
+          opacity: 0.5,
         })
         .addTo((this.$refs.myMap as any).mapObject)
     },
@@ -75,11 +92,11 @@ export default Vue.extend({
             weight: 4,
             // fill: true,
             // fillColor: 'green',
-            opacity: 0.5
+            opacity: 0.5,
           })
           .addTo((this.$refs.myMap as any).mapObject)
       }
-    }
+    },
   },
   mounted() {
     // const myMap = this.$L.map('mapid')
@@ -154,9 +171,19 @@ export default Vue.extend({
         console.log(error)
       },
       {
-        enableHighAccuracy: true // 高精度で測定するオプション
+        enableHighAccuracy: true, // 高精度で測定するオプション
       }
     )
-  }
+  },
 })
 </script>
+<style lang="scss" scoped>
+button {
+  z-index: 1400 !important;
+  position: absolute;
+  bottom: 1%;
+  left: 50%;
+  margin: 0;
+  padding: 0;
+}
+</style>
