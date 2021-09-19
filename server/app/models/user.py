@@ -1,4 +1,5 @@
-from app.models import db, Base, datetime_jstnow
+from app.models import Base, datetime_jstnow
+from database import db
 from app.models.columntypes import Geometry
 
 __all__ = ["User"]

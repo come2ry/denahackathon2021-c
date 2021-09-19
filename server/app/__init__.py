@@ -3,7 +3,7 @@ import logging
 import coloredlogs
 from flask import Flask
 from flask_cors import CORS
-from app.models import db
+from database import db
 # TODO: 以降`server/app/resources/*.py`で定義したBluePrintをここでimportしていく
 from app.resources import geo, locus, sample
 from flask_migrate import Migrate
