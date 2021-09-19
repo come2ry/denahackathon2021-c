@@ -8,11 +8,8 @@ COPY . .
 FROM node:lts-alpine AS builder
 
 # Create app directory
-WORKDIR /app
-ADD . /app/
-
-# global install & update
-RUN npm i -g npm && npm i -g yarn
+WORKDIR /client
+ADD . /client/
 
 RUN rm yarn.lock
 RUN yarn
