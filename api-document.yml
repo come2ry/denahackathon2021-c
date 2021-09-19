@@ -3,7 +3,7 @@ info:
   title: DeNA Autumn Hackathon C Team
   version: 1.0.0
 servers:
-  - url: http://localhost:8080/api/v1
+  - url: http://localhost:8081/api/v1
 tags:
   - name: geo
     description: 位置情報関連 API
@@ -150,23 +150,21 @@ components:
           format: float
           description: 経度
     PostGeoResponse:
-      type: array
-      items:
-        type: object
-        properties:
-          locus_id:
-            type: integer
-            description: 軌跡 ID
-          user_id:
-            type: integer
-            description: ユーザ ID
-          username:
-            type: string
-            description: ユーザネーム
-          datetime:
-            type: string
-            format: date-time
-            description: 囲まれた日時
+      type: object
+      properties:
+        locus_id:
+          type: integer
+          description: 軌跡 ID
+        user_id:
+          type: integer
+          description: ユーザ ID
+        username:
+          type: string
+          description: ユーザネーム
+        datetime:
+          type: string
+          format: date-time
+          description: 囲まれた日時
     GetLocusResponse:
       type: object
       properties:

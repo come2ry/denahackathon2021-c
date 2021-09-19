@@ -27,7 +27,7 @@ services:
         source: ./server
         target: /server
     working_dir: /server
-    # command: python main.py
+    command: python main.py
     environment:
       FLASK_ENV: development
       FLASK_APP: app
