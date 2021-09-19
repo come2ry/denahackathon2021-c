@@ -23,7 +23,7 @@ class Locus:
     def is_in(self, geo:Geo) -> bool:
         poly = Polygon(*[(geo.latitude, geo.longitude) for geo in self.geos])
         if not (isinstance(poly, Triangle) or isinstance(poly, Polygon)): return False
-        return poly.encloses_point(Point(geo['latitude'],geo['longitude']))
+        return poly.encloses_point(Point(geo.latitude,geo.longitude))
 
     def get_rectangle(self):
         latitudes = [geo.latitude for geo in self.geos]
