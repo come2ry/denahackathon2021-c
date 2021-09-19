@@ -1,7 +1,6 @@
 <template>
   <div>
     {{ locus }}
-    {{ geo }}
   </div>
 </template>
 <script>
@@ -25,7 +24,7 @@ export default {
         this.errored = true
       })
     this.$axios
-      .$get('http://localhost:8081/api/v1/locus')
+      .$get('http://localhost:8081/api/v1/locus/1')
       .then((response) => (this.locus = response))
       .catch((error) => {
         // エラー処理
