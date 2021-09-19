@@ -25,7 +25,19 @@ test('findLoci', () => {
     lng: e[0],
     lat: e[1]
   }))
-  expect(findLoci(logs)).toStrictEqual([[...logs]])
+  expect(findLoci(logs)).toStrictEqual([
+    [[...logs]],
+    [
+      {
+        lng: 0,
+        lat: 0
+      },
+      {
+        lng: -1,
+        lat: 0
+      }
+    ]
+  ])
 })
 
 test('findTwoLoci', () => {
@@ -45,18 +57,34 @@ test('findTwoLoci', () => {
   }))
   expect(findLoci(logs)).toStrictEqual([
     [
-      { lng: 0, lat: -1 },
-      { lng: 0, lat: 0 },
-      { lng: 0, lat: 1 },
-      { lng: 1, lat: 1 },
-      { lng: 1, lat: 0 },
-      { lng: -0.5, lat: 0 }
+      [
+        { lng: 0, lat: -1 },
+        { lng: 0, lat: 0 },
+        { lng: 0, lat: 1 },
+        { lng: 1, lat: 1 },
+        { lng: 1, lat: 0 },
+        { lng: -0.5, lat: 0 }
+      ],
+      [
+        { lng: -2, lat: 1 },
+        { lng: 0, lat: -1 },
+        { lng: -0.5, lat: 0 },
+        { lng: -1, lat: 0 }
+      ]
     ],
     [
-      { lng: -2, lat: 1 },
-      { lng: 0, lat: -1 },
-      { lng: -0.5, lat: 0 },
-      { lng: -1, lat: 0 }
+      {
+        lng: -2,
+        lat: 1
+      },
+      {
+        lng: -1,
+        lat: 0
+      },
+      {
+        lng: -2,
+        lat: 0
+      }
     ]
   ])
 })
