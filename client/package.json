@@ -27,7 +27,7 @@
     "nuxt": "^2.15.7",
     "nuxt-leaflet": "^0.0.25",
     "sass-loader": "^10.2.0",
-    "vuetify": "^2.5.5"
+    "vuetify": "^2.6.10"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.14.7",
